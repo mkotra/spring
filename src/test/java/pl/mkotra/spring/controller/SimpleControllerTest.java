@@ -2,22 +2,26 @@ package pl.mkotra.spring.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.mkotra.spring.domain.Item;
-import pl.mkotra.spring.domain.ItemService;
+import org.springframework.data.redis.core.RedisTemplate;
+import pl.mkotra.spring.storage.Item;
+import pl.mkotra.spring.storage.ItemRepository;
 
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class SimpleControllerTest extends BaseControllerTest {
 
-    //spring application beans available in tests context
     @Autowired
-    ItemService itemService;
+    ItemRepository itemRepository;
+
+    @Autowired
+    RedisTemplate<String, Item> itemTemplate;
 
     @Test
     void simpleTest() {
+
         List<Item> result = webTestClient.get()
                 .uri("/items/flux")
                 .exchange()
@@ -28,7 +32,18 @@ public class SimpleControllerTest extends BaseControllerTest {
                 .getResponseBody();
 
         assertNotNull(result);
-        assertEquals(3, result.size());
-        assertEquals(1, result.get(0).getId());
+        assertEquals(1, result.size());
+        assertNotNull(result.get(0).getId());
+        assertNotNull(result.get(0).getName());
+    }
+
+    @Test
+    void simpleTest2() {
+        Item item = Item.of("id", "name");
+        itemRepository.save(item);
+        Optional<Item> result = itemRepository.findById("id");
+
+        assertTrue(result.isPresent());
+        assertEquals("id", result.get().getId());
     }
 }

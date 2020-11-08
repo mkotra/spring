@@ -5,13 +5,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
-import pl.mkotra.spring.domain.Item;
-import pl.mkotra.spring.domain.ItemService;
+import pl.mkotra.spring.storage.Item;
+import pl.mkotra.spring.storage.ItemRepository;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -19,18 +20,20 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SimpleController {
 
-    private final ItemService itemService;
+    private final ItemRepository itemRepository;
 
     @RequestMapping(value = "/mono", method = RequestMethod.GET)
     public Mono<Item> mono() {
         log.info("ACCEPTED");
-        return Mono.just(Item.of(123));
+        return Mono.just(Item.of("1", "test" ));
     }
 
     @RequestMapping(value = "/flux", method = RequestMethod.GET)
     public Flux<Item> flux() {
-        log.info("ACCEPTED :" + itemService.item());
-        return Flux.fromIterable(List.of(Item.of(1), Item.of(2), Item.of(3)));
+        String id = UUID.randomUUID().toString();
+
+        itemRepository.save(Item.of(UUID.randomUUID().toString(), "Item " + id));
+        return Flux.fromIterable(itemRepository.findAll());
     }
 
     @RequestMapping(value = "/range", method = RequestMethod.GET)
