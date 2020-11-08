@@ -16,9 +16,6 @@ public class SimpleControllerTest extends BaseControllerTest {
     @Autowired
     ItemRepository itemRepository;
 
-    @Autowired
-    RedisTemplate<String, Item> itemTemplate;
-
     @Test
     void simpleTest() {
 
