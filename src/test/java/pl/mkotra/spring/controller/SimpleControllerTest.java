@@ -2,7 +2,6 @@ package pl.mkotra.spring.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import pl.mkotra.spring.storage.Item;
 import pl.mkotra.spring.storage.ItemRepository;
 
