@@ -10,7 +10,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class SimpleControllerTest extends BaseControllerTest {
+public class SimpleControllerIT extends BaseIT {
 
     @Autowired
     ItemRepository itemRepository;

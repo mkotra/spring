@@ -22,7 +22,7 @@ import java.time.Duration;
 @AutoConfigureWebTestClient
 @ActiveProfiles("tests")
 @Testcontainers
-abstract class BaseControllerTest {
+abstract class BaseIT {
 
     private static final int REDIS_PORT = 6379;
     private static final String REDIS_IMAGE = "redis:5.0.3-alpine";
