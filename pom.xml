@@ -5,7 +5,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.4.0</version>
+        <version>2.4.2</version>
         <relativePath/>
     </parent>
     <groupId>pl.mkotra</groupId>
@@ -19,7 +19,6 @@
         <lombok.version>1.18.16</lombok.version>
         <springfox.version>3.0.0</springfox.version>
         <testcontainers.version>1.15.0-rc2</testcontainers.version>
-
         <maven.build.helper.plugin.version>3.2.0</maven.build.helper.plugin.version>
         <maven.failsafe.plugin.version>2.22.2</maven.failsafe.plugin.version>
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
