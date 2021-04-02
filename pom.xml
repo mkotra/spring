@@ -15,8 +15,8 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>15</java.version>
-        <lombok.version>1.18.16</lombok.version>
+        <java.version>16</java.version>
+        <lombok.version>1.18.20</lombok.version>
         <springfox.version>3.0.0</springfox.version>
         <testcontainers.version>1.15.0-rc2</testcontainers.version>
         <maven.build.helper.plugin.version>3.2.0</maven.build.helper.plugin.version>
