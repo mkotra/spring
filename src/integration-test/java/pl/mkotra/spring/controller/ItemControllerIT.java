@@ -2,7 +2,6 @@ package pl.mkotra.spring.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import pl.mkotra.spring.core.ItemService;
 import pl.mkotra.spring.model.Item;
 
@@ -20,7 +19,7 @@ public class ItemControllerIT extends BaseIT {
     void simpleTest() {
         //given
         itemService.save(new Item(null, "Some item"))
-                .subscribe();
+                .block();
 
         //when
         List<Item> result = webTestClient.get()
