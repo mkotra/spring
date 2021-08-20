@@ -1,5 +1,6 @@
 package pl.mkotra.spring.controller;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +11,8 @@ import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.reactive.server.WebTestClient;
-import org.testcontainers.containers.GenericContainer;
+import org.testcontainers.containers.MongoDBContainer;
 import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
@@ -21,15 +21,14 @@ import java.time.Duration;
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
 @ActiveProfiles("tests")
-@Testcontainers
 abstract class BaseIT {
 
-    private static final int REDIS_PORT = 6379;
-    private static final String REDIS_IMAGE = "redis:5.0.3-alpine";
-
     @Container
-    static GenericContainer<?> redis = new GenericContainer<>(DockerImageName.parse(REDIS_IMAGE))
-            .withExposedPorts(REDIS_PORT);
+    static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:4.4.8"));
+
+    static {
+        mongo.start();
+    }
 
     @Autowired
     WebTestClient webTestClient;
@@ -42,9 +41,13 @@ abstract class BaseIT {
                 .build();
     }
 
+    @AfterEach
+    public void tearDown() {
+    }
+
     @DynamicPropertySource
-    static void redisProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.redis.host", redis::getContainerIpAddress);
-        registry.add("spring.redis.port",  () -> redis.getMappedPort(REDIS_PORT));
+    static void mongoProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.data.mongodb.database", () -> "demo");
+        registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
     }
 }
