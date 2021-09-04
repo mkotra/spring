@@ -1,10 +1,11 @@
 package pl.mkotra.spring;
 
 import org.junit.jupiter.api.Test;
-import pl.mkotra.spring.core.ItemService;
-import pl.mkotra.spring.model.Item;
-import pl.mkotra.spring.storage.ItemDB;
-import pl.mkotra.spring.storage.ItemRepository;
+import pl.mkotra.spring.core.RadioStationService;
+import pl.mkotra.spring.integration.RadioBrowserAdapter;
+import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.storage.RadioStationDB;
+import pl.mkotra.spring.storage.RadioStationRepository;
 import reactor.core.publisher.Flux;
 
 import java.util.List;
@@ -16,20 +17,22 @@ import static org.mockito.Mockito.when;
 
 public class ItemServiceTest {
 
-    ItemRepository itemRepository = mock(ItemRepository.class);
-    ItemService itemService = new ItemService(itemRepository);
+    RadioStationRepository radioStationRepository = mock(RadioStationRepository.class);
+    RadioBrowserAdapter radioBrowserAdapter = mock(RadioBrowserAdapter.class);
+
+    RadioStationService radioStationService = new RadioStationService(radioStationRepository, radioBrowserAdapter);
 
     @Test
     public void simpleUnitTest() {
         //given
-        when(itemRepository.findAll()).thenReturn(Flux.just(new ItemDB("ID", "NAME")));
+        when(radioStationRepository.findAll()).thenReturn(Flux.just(new RadioStationDB("ID", "Radio 1", "Poland")));
 
         //when
-        Flux<Item> itemFlux = itemService.findAll();
+        Flux<RadioStation> itemFlux = radioStationService.findAll();
 
         //then
-        List<Item> items = itemFlux.toStream().collect(Collectors.toList());
-        assertEquals(1, items.size());
-        assertEquals("ID", items.get(0).id());
+        List<RadioStation> radioStations = itemFlux.toStream().collect(Collectors.toList());
+        assertEquals(1, radioStations.size());
+        assertEquals("ID", radioStations.get(0).id());
     }
 }

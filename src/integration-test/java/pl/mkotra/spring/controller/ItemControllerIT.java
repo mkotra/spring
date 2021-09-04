@@ -2,8 +2,8 @@ package pl.mkotra.spring.controller;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import pl.mkotra.spring.core.ItemService;
-import pl.mkotra.spring.model.Item;
+import pl.mkotra.spring.core.RadioStationService;
+import pl.mkotra.spring.model.RadioStation;
 
 import java.util.List;
 
@@ -13,21 +13,21 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 public class ItemControllerIT extends BaseIT {
 
     @Autowired
-    ItemService itemService;
+    RadioStationService itemService;
 
     @Test
     void simpleTest() {
         //given
-        itemService.save(new Item(null, "Some item"))
+        itemService.save(new RadioStation(null, "Radio 1", "Poland"))
                 .block();
 
         //when
-        List<Item> result = webTestClient.get()
-                .uri("/items")
+        List<RadioStation> result = webTestClient.get()
+                .uri("/radio-station")
                 .exchange()
                 .expectStatus()
                 .isOk()
-                .expectBodyList(Item.class)
+                .expectBodyList(RadioStation.class)
                 .returnResult()
                 .getResponseBody();
 
