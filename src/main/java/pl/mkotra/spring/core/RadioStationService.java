@@ -27,6 +27,7 @@ public class RadioStationService {
 
     public Flux<RadioStation> pull(int limit) {
         Flux<RadioStation> radioStationFlux = radioBrowserAdapter.find(limit);
+        radioStationRepository.deleteAll();
         return radioStationFlux.collectList().flatMapMany(this::save);
     }
 
