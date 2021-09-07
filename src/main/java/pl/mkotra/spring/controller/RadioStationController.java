@@ -15,7 +15,7 @@ public class RadioStationController {
         this.radioStationService = radioStationService;
     }
 
-    @PostMapping
+    @PostMapping("/pull")
     public Flux<RadioStation> pull(@RequestParam int limit) {
         return radioStationService.pull(limit);
     }
@@ -24,4 +24,6 @@ public class RadioStationController {
     public Flux<RadioStation> findAll() {
         return radioStationService.findAll();
     }
+
+
 }

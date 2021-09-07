@@ -8,6 +8,7 @@ import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
 import reactor.core.publisher.Flux;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,7 +26,9 @@ public class ItemServiceTest {
     @Test
     public void simpleUnitTest() {
         //given
-        when(radioStationRepository.findAll()).thenReturn(Flux.just(new RadioStationDB("ID", "Radio 1", "Poland")));
+        when(radioStationRepository.findAll()).thenReturn(Flux.just(
+                new RadioStationDB("ID", "Radio 1", "Poland", OffsetDateTime.now()))
+        );
 
         //when
         Flux<RadioStation> itemFlux = radioStationService.findAll();

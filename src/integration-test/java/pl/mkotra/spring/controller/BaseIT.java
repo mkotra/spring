@@ -1,8 +1,10 @@
 package pl.mkotra.spring.controller;
 
+import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -17,11 +19,15 @@ import org.testcontainers.utility.DockerImageName;
 
 import java.time.Duration;
 
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
+
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
 @ActiveProfiles("tests")
 abstract class BaseIT {
+
+    static final int WIREMOCK_PORT = 8443;
 
     @Container
     static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:4.4.8"));
@@ -29,6 +35,11 @@ abstract class BaseIT {
     static {
         mongo.start();
     }
+
+    @RegisterExtension
+    protected static WireMockExtension wireMockExtension = WireMockExtension.newInstance()
+            .options(wireMockConfig().port(WIREMOCK_PORT))
+            .build();
 
     @Autowired
     WebTestClient webTestClient;
@@ -49,5 +60,7 @@ abstract class BaseIT {
     static void mongoProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
+        registry.add("integration.radio-browser-api-url", () -> "localhost:" + WIREMOCK_PORT);
+
     }
 }

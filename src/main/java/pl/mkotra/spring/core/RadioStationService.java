@@ -18,7 +18,6 @@ public class RadioStationService {
     private final RadioStationRepository radioStationRepository;
     private final RadioBrowserAdapter radioBrowserAdapter;
 
-
     public RadioStationService(RadioStationRepository radioStationRepository,
                                RadioBrowserAdapter radioBrowserAdapter) {
         this.radioStationRepository = radioStationRepository;
@@ -26,7 +25,7 @@ public class RadioStationService {
     }
 
     public Flux<RadioStation> pull(int limit) {
-        Flux<RadioStation> radioStationFlux = radioBrowserAdapter.find(limit);
+        Flux<RadioStation> radioStationFlux = radioBrowserAdapter.getRadioStations(limit);
         radioStationRepository.deleteAll();
         return radioStationFlux.collectList().flatMapMany(this::save);
     }

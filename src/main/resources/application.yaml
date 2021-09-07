@@ -4,3 +4,6 @@ spring:
   data:
     mongodb:
       database: "demo"
+
+integration:
+  radio-browser-api-url: "de1.api.radio-browser.info:443"
