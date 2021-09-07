@@ -15,14 +15,15 @@ import java.util.function.Supplier;
 public class RadioBrowserAdapter {
 
     private final WebClient webClient;
+    private final String radioBrowserApiUrl;
     private final Supplier<OffsetDateTime> timeSupplier;
 
     public RadioBrowserAdapter(@Value("${integration.radio-browser-api-url}") String radioBrowserApiUrl,
                                Supplier<OffsetDateTime> timeSupplier) {
         webClient = WebClient.builder()
-                .baseUrl(radioBrowserApiUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
+        this.radioBrowserApiUrl = radioBrowserApiUrl;
         this.timeSupplier = timeSupplier;
     }
 
@@ -30,7 +31,7 @@ public class RadioBrowserAdapter {
         OffsetDateTime timestamp = timeSupplier.get();
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path("/json/stations")
+                        .path(radioBrowserApiUrl + "/json/stations")
                         .queryParam("limit", limit)
                         .build())
                 .retrieve()

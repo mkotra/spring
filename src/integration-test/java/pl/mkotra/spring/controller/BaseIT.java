@@ -1,5 +1,7 @@
 package pl.mkotra.spring.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -27,7 +29,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @ActiveProfiles("tests")
 abstract class BaseIT {
 
-    static final int WIREMOCK_PORT = 8443;
+    static final int RADIO_BROWSER_API_PORT = 8443;
 
     @Container
     static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:4.4.8"));
@@ -38,11 +40,22 @@ abstract class BaseIT {
 
     @RegisterExtension
     protected static WireMockExtension wireMockExtension = WireMockExtension.newInstance()
-            .options(wireMockConfig().port(WIREMOCK_PORT))
+            .options(wireMockConfig().port(RADIO_BROWSER_API_PORT))
             .build();
 
     @Autowired
-    WebTestClient webTestClient;
+    protected WebTestClient webTestClient;
+
+    @Autowired
+    protected ObjectMapper objectMapper;
+
+    protected String toJson(Object value) {
+        try {
+            return objectMapper.writeValueAsString(value);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     @BeforeEach
     public void setUp() {
@@ -60,7 +73,7 @@ abstract class BaseIT {
     static void mongoProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
-        registry.add("integration.radio-browser-api-url", () -> "localhost:" + WIREMOCK_PORT);
+        registry.add("integration.radio-browser-api-url", () -> "localhost:" + RADIO_BROWSER_API_PORT);
 
     }
 }
