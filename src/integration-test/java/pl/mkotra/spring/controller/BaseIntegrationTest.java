@@ -10,7 +10,6 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -23,11 +22,10 @@ import java.time.Duration;
 
 import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMockConfig;
 
-@SpringBootTest
+@SpringBootTest(properties = "spring.profiles.include=tests")
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
-@ActiveProfiles("tests")
-abstract class BaseIT {
+abstract class BaseIntegrationTest {
 
     static final int RADIO_BROWSER_API_PORT = 8443;
 
@@ -74,6 +72,5 @@ abstract class BaseIT {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
         registry.add("integration.radio-browser-api-url", () -> "localhost:" + RADIO_BROWSER_API_PORT);
-
     }
 }

@@ -34,7 +34,7 @@ public class ItemServiceTest {
         Flux<RadioStation> itemFlux = radioStationService.findAll();
 
         //then
-        List<RadioStation> radioStations = itemFlux.toStream().collect(Collectors.toList());
+        List<RadioStation> radioStations = itemFlux.toStream().toList();
         assertEquals(1, radioStations.size());
         assertEquals("ID", radioStations.get(0).id());
     }
