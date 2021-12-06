@@ -15,7 +15,7 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class RadioStationControllerIntegrationTest extends BaseIntegrationTest {
+public class RadioStationControllerIT extends BaseIT {
 
     @Autowired
     RadioStationService radioStationService;

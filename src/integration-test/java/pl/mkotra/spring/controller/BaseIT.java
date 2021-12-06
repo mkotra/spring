@@ -25,7 +25,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @SpringBootTest(properties = "spring.profiles.include=tests")
 @ExtendWith(SpringExtension.class)
 @AutoConfigureWebTestClient
-abstract class BaseIntegrationTest {
+abstract class BaseIT {
 
     static final int RADIO_BROWSER_API_PORT = 8443;
 
