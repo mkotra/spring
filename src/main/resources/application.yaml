@@ -14,5 +14,12 @@ management:
       exposure:
         include: "*"
 
+springdoc:
+  api-docs:
+    enabled: true
+  swagger-ui:
+    enabled: true
+    use-root-path: true
+
 integration:
   radio-browser-api-url: "de1.api.radio-browser.info:443"
