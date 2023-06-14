@@ -68,7 +68,7 @@ abstract class BaseIT {
     }
 
     @DynamicPropertySource
-    static void mongoProperties(DynamicPropertyRegistry registry) {
+    static void testProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
         registry.add("integration.radio-browser-api-url", () -> "http://localhost:" + RADIO_BROWSER_API_PORT);
