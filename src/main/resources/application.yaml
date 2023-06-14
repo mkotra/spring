@@ -22,4 +22,4 @@ springdoc:
     use-root-path: true
 
 integration:
-  radio-browser-api-url: "de1.api.radio-browser.info"
+  radio-browser-api-url: "http://de1.api.radio-browser.info:80"

@@ -27,7 +27,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @AutoConfigureWebTestClient
 abstract class BaseIT {
 
-    static final int RADIO_BROWSER_API_PORT = 8443;
+    static final int RADIO_BROWSER_API_PORT = 9999;
 
     @Container
     static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:4.4.8"));
@@ -71,6 +71,6 @@ abstract class BaseIT {
     static void mongoProperties(DynamicPropertyRegistry registry) {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
-        registry.add("integration.radio-browser-api-url", () -> "localhost:" + RADIO_BROWSER_API_PORT);
+        registry.add("integration.radio-browser-api-url", () -> "http://localhost:" + RADIO_BROWSER_API_PORT);
     }
 }

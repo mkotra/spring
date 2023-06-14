@@ -21,6 +21,7 @@ public class RadioBrowserAdapter {
     public RadioBrowserAdapter(@Value("${integration.radio-browser-api-url}") String radioBrowserApiUrl,
                                Supplier<OffsetDateTime> timeSupplier) {
         webClient = WebClient.builder()
+                .baseUrl(radioBrowserApiUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
         this.radioBrowserApiUrl = radioBrowserApiUrl;
@@ -31,7 +32,7 @@ public class RadioBrowserAdapter {
         OffsetDateTime timestamp = timeSupplier.get();
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder
-                        .path(radioBrowserApiUrl + "/json/stations")
+                        .path("/json/stations")
                         .queryParam("limit", limit)
                         .build())
                 .retrieve()
