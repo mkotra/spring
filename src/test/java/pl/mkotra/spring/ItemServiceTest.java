@@ -10,10 +10,9 @@ import reactor.core.publisher.Flux;
 
 import java.time.OffsetDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
-import static org.mockito.Mockito.mock;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 public class ItemServiceTest {
