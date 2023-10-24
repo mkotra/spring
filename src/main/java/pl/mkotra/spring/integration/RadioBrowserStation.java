@@ -1,6 +1,6 @@
 package pl.mkotra.spring.integration;
 
-record RadioBrowserStation(
+public record RadioBrowserStation(
         String stationuuid,
         String name,
         String country) {

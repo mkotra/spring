@@ -6,7 +6,6 @@ import pl.mkotra.spring.integration.RadioBrowserAdapter;
 import pl.mkotra.spring.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
-import reactor.core.publisher.Flux;
 
 import java.time.OffsetDateTime;
 import java.util.List;
@@ -25,16 +24,15 @@ public class ItemServiceTest {
     @Test
     public void simpleUnitTest() {
         //given
-        when(radioStationRepository.findAll()).thenReturn(Flux.just(
+        when(radioStationRepository.findAll()).thenReturn(List.of(
                 new RadioStationDB("ID", "Radio 1", "Poland", OffsetDateTime.now()))
         );
 
         //when
-        Flux<RadioStation> itemFlux = radioStationService.findAll();
+        List<RadioStation> result = radioStationService.findAll();
 
         //then
-        List<RadioStation> radioStations = itemFlux.toStream().toList();
-        assertEquals(1, radioStations.size());
-        assertEquals("ID", radioStations.get(0).id());
+        assertEquals(1, result.size());
+        assertEquals("ID", result.getFirst().id());
     }
 }

@@ -3,17 +3,24 @@ package pl.mkotra.spring;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguration;
+import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
+import org.springframework.core.task.AsyncTaskExecutor;
+import org.springframework.core.task.support.TaskExecutorAdapter;
 import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import pl.mkotra.spring.storage.converter.OffsetDateTimeReaderConverter;
 import pl.mkotra.spring.storage.converter.OffsetDateTimeWriterConverter;
 
 import java.util.List;
+import java.util.concurrent.Executors;
 
 @Configuration
-public class ApplicationConfig {
+@EnableMongoRepositories
+public class ApplicationConfiguration {
 
     @Bean
     public ObjectMapper objectMapper() {
@@ -32,4 +39,19 @@ public class ApplicationConfig {
 
         return new MongoCustomConversions(converters);
     }
+
+
+    // enable virtual threads
+    @Bean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME)
+    public AsyncTaskExecutor asyncTaskExecutor() {
+        return new TaskExecutorAdapter(Executors.newVirtualThreadPerTaskExecutor());
+    }
+
+    @Bean
+    public TomcatProtocolHandlerCustomizer<?> protocolHandlerVirtualThreadExecutorCustomizer() {
+        return protocolHandler -> {
+            protocolHandler.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
+        };
+    }
+    // enable virtual threads
 }

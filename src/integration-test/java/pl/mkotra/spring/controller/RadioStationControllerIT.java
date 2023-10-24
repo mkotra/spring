@@ -1,19 +1,22 @@
 package pl.mkotra.spring.controller;
 
+import com.github.tomakehurst.wiremock.client.WireMock;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import pl.mkotra.spring.core.RadioStationService;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.integration.RadioBrowserStation;
 
-import java.util.Collections;
 import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.Matchers.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class RadioStationControllerIT extends BaseIT {
 
@@ -21,28 +24,30 @@ public class RadioStationControllerIT extends BaseIT {
     RadioStationService radioStationService;
 
     @Test
-    void pullRadioStationsTest() {
-        wireMockExtension.stubFor(get("/json/stations?limit=10").willReturn(
-                aResponse().withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .withBody(toJson(Collections.emptyList()))
+    void pullRadioStationsTest() throws Exception {
+        wireMockExtension.stubFor(WireMock.get("/json/stations?limit=10")
+                .willReturn(aResponse().withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
+                        .withBody(toJson(List.of(new RadioBrowserStation("stationuuid", "name", "country"))))
         ));
 
-        //when
-        List<RadioStation> result = webTestClient.post()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/radio-stations/pull")
-                        .queryParam("limit", 10)
-                        .build())
-                .exchange()
-                .expectStatus()
-                .isOk()
-                .expectBodyList(RadioStation.class)
-                .returnResult()
-                .getResponseBody();
+        mockMvc.perform(post("/radio-stations/pull?limit=10"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].name").value(is("name")))
+                .andExpect(jsonPath("$[0].country").value(is("country")))
+                .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
 
-
-        //then
-        assertNotNull(result);
-        assertEquals(0, result.size());
+        mockMvc.perform(get("/radio-stations"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].name").value(is("name")))
+                .andExpect(jsonPath("$[0].country").value(is("country")))
+                .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
     }
 }

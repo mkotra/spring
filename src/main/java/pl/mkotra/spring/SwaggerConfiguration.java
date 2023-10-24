@@ -8,7 +8,8 @@ import org.springframework.context.annotation.Profile;
 
 @Profile("!tests")
 @Configuration
-public class SwaggerConfig {
+public class SwaggerConfiguration {
+
     @Bean
     public OpenAPI openApi() {
         return new OpenAPI()
