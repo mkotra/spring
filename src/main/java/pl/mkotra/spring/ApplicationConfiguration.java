@@ -40,7 +40,6 @@ public class ApplicationConfiguration {
         return new MongoCustomConversions(converters);
     }
 
-
     // enable virtual threads
     @Bean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME)
     public AsyncTaskExecutor asyncTaskExecutor() {
