@@ -1,12 +1,10 @@
 package pl.mkotra.spring.integration;
 
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 import pl.mkotra.spring.model.RadioStation;
 
 import java.time.OffsetDateTime;
@@ -18,14 +16,14 @@ import java.util.function.Supplier;
 @Component
 public class RadioBrowserAdapter {
 
-    private final RestTemplate restTemplate;
+    private final RestClient restClient;
     private final Supplier<OffsetDateTime> timeSupplier;
 
     public RadioBrowserAdapter(@Value("${integration.radio-browser-api-url}") String radioBrowserApiUrl,
                                Supplier<OffsetDateTime> timeSupplier) {
 
-        restTemplate = new RestTemplateBuilder()
-                .rootUri(radioBrowserApiUrl)
+        restClient = RestClient.builder()
+                .baseUrl(radioBrowserApiUrl)
                 .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .build();
         this.timeSupplier = timeSupplier;
@@ -33,8 +31,11 @@ public class RadioBrowserAdapter {
 
     public List<RadioStation> getRadioStations(int limit) {
         OffsetDateTime timestamp = timeSupplier.get();
-        ResponseEntity<RadioBrowserStation[]> result = restTemplate.getForEntity("/json/stations?limit=" + limit, RadioBrowserStation[].class);
-        RadioBrowserStation[] radioBrowserStations = result.getBody();
+        RadioBrowserStation[] radioBrowserStations = restClient.get()
+                .uri("/json/stations?limit=" + limit)
+                .retrieve()
+                .body(RadioBrowserStation[].class);
+
         return Optional.ofNullable(radioBrowserStations)
                 .stream()
                 .flatMap(Arrays::stream)
