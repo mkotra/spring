@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.3</version>
+        <version>3.2.5</version>
         <relativePath/>
     </parent>
 
@@ -18,21 +18,21 @@
     <description>Demo project for Spring Boot</description>
 
     <properties>
-        <java.version>21</java.version>
+        <java.version>22</java.version>
 
-        <springdoc.version>2.2.0</springdoc.version>
-        <testcontainers.version>1.19.1</testcontainers.version>
+        <springdoc.version>2.5.0</springdoc.version>
+        <testcontainers.version>1.19.7</testcontainers.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <wiremock.version>3.0.1</wiremock.version>
+        <wiremock.version>3.5.3</wiremock.version>
 
-        <maven.build.helper.plugin.version>3.4.0</maven.build.helper.plugin.version>
-        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+        <maven.build.helper.plugin.version>3.5.0</maven.build.helper.plugin.version>
+        <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
-        <maven.failsafe.plugin.version>3.2.1</maven.failsafe.plugin.version>
-        <maven.surefire.plugin.version>3.2.1</maven.surefire.plugin.version>
-        <maven.jacoco.plugin.version>0.8.11</maven.jacoco.plugin.version>
-        <maven.git-commit-id.plugin.version>6.0.0</maven.git-commit-id.plugin.version>
+        <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
+        <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <maven.jacoco.plugin.version>0.8.12</maven.jacoco.plugin.version>
+        <maven.git-commit-id.plugin.version>8.0.2</maven.git-commit-id.plugin.version>
     </properties>
 
     <dependencies>
