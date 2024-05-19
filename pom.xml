@@ -21,9 +21,9 @@
         <java.version>22</java.version>
 
         <springdoc.version>2.5.0</springdoc.version>
-        <testcontainers.version>1.19.7</testcontainers.version>
+        <testcontainers.version>1.19.8</testcontainers.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
-        <wiremock.version>3.5.3</wiremock.version>
+        <wiremock.version>3.5.4</wiremock.version>
 
         <maven.build.helper.plugin.version>3.5.0</maven.build.helper.plugin.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
@@ -33,6 +33,7 @@
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <maven.jacoco.plugin.version>0.8.12</maven.jacoco.plugin.version>
         <maven.git-commit-id.plugin.version>8.0.2</maven.git-commit-id.plugin.version>
+        <maven.versions.plugin.version>2.16.2</maven.versions.plugin.version>
     </properties>
 
     <dependencies>
@@ -129,7 +130,8 @@
                 </executions>
                 <configuration>
                     <generateGitPropertiesFile>true</generateGitPropertiesFile>
-                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties
+                    </generateGitPropertiesFilename>
                     <includeOnlyProperties>
                         <includeOnlyProperty>^git.build.(time|version)$</includeOnlyProperty>
                         <includeOnlyProperty>^git.commit.id.(abbrev|full)$</includeOnlyProperty>
@@ -206,7 +208,8 @@
                         </goals>
                         <configuration>
                             <dataFile>${project.build.directory}/jacoco-unit-tests.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test-coverage-report</outputDirectory>
+                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-unit-test-coverage-report
+                            </outputDirectory>
                         </configuration>
                     </execution>
 
@@ -230,11 +233,19 @@
                         </goals>
                         <configuration>
                             <dataFile>${project.build.directory}/jacoco-integration-tests.exec</dataFile>
-                            <outputDirectory>${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report</outputDirectory>
+                            <outputDirectory>
+                                ${project.reporting.outputDirectory}/jacoco-integration-test-coverage-report
+                            </outputDirectory>
                         </configuration>
                     </execution>
 
                 </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.16.2</version>
             </plugin>
 
         </plugins>
