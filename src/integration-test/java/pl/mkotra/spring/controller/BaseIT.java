@@ -58,6 +58,8 @@ abstract class BaseIT {
 
     @DynamicPropertySource
     static void testProperties(DynamicPropertyRegistry registry) {
+        registry.add("spring.cloud.consul.enabled", () -> "false");
+        registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
         registry.add("integration.radio-browser-api-url", () -> "http://localhost:" + RADIO_BROWSER_TEST_API_PORT);

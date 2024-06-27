@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: demo
   main:
     banner-mode: "LOG"
   data:
@@ -6,6 +8,20 @@ spring:
       database: "demo"
       host: localhost
       port: 27017
+  config:
+    import: "consul:localhost:8500:"
+  cloud:
+    host: localhost
+    port: 8500
+    consul:
+      discovery:
+        enabled: true
+        instance-group: demo
+        instance-id: demo:${random.value}
+        healthCheckPath: /actuator/health
+        healthCheckInterval: 5s
+      config:
+        enabled: true
 
 management:
   endpoint:
