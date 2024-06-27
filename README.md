@@ -1,6 +1,6 @@
 # spring
 
-You need MongoDB (at least 5.0.0) and Consul running on default ports: 
+You need Java 22, MongoDB (at least 5.0.0) and Consul running on default ports: 
 
 
 Mongo (with Docker)
@@ -19,6 +19,12 @@ seed consul values:
 
 ``
 ./seed-consul.sh
+``
+
+Run app:
+
+``
+mvn spring-boot:run
 ``
 
 

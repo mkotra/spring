@@ -1,6 +1,9 @@
+server:
+  port: 0
 spring:
   application:
     name: demo
+    version: @project.version@
   main:
     banner-mode: "LOG"
   data:
@@ -17,7 +20,7 @@ spring:
       discovery:
         enabled: true
         instance-group: demo
-        instance-id: demo:${random.value}
+        instance-id: ${spring.application.name}:${spring.application.version}:${random.int}
         healthCheckPath: /actuator/health
         healthCheckInterval: 5s
       config:
