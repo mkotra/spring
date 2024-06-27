@@ -9,7 +9,7 @@ spring:
       host: localhost
       port: 27017
   config:
-    import: "consul:localhost:8500:"
+    import: "optional:consul:localhost:8500"
   cloud:
     host: localhost
     port: 8500
