@@ -63,5 +63,6 @@ abstract class BaseIT {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
         registry.add("integration.radio-browser-api-url", () -> "http://localhost:" + RADIO_BROWSER_TEST_API_PORT);
+        registry.add("distributed.property", () -> "dummy");
     }
 }

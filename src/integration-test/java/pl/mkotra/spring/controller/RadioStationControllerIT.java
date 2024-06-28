@@ -28,7 +28,7 @@ public class RadioStationControllerIT extends BaseIT {
         wireMockExtension.stubFor(WireMock.get("/json/stations?limit=10")
                 .willReturn(aResponse().withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .withBody(toJson(List.of(new RadioBrowserStation("stationuuid", "name", "country"))))
-        ));
+                ));
 
         mockMvc.perform(post("/radio-stations/pull?limit=10"))
                 .andDo(print())
