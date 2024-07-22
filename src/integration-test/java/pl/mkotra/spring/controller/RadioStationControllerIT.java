@@ -25,9 +25,19 @@ public class RadioStationControllerIT extends BaseIT {
 
     @Test
     void pullRadioStationsTest() throws Exception {
+        String requestBody = """ 
+                        [
+                            {
+                                "stationuuid" : "123e4567-e89b-12d3-a456-426655440000",
+                                "name" : "Radio 1",
+                                "country" : "Poland"
+                            }
+                        ]
+                """;
+
         wireMockExtension.stubFor(WireMock.get("/json/stations?limit=10")
                 .willReturn(aResponse().withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .withBody(toJson(List.of(new RadioBrowserStation("stationuuid", "name", "country"))))
+                        .withBody(requestBody)
                 ));
 
         mockMvc.perform(post("/radio-stations/pull?limit=10"))
@@ -36,8 +46,8 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").value(hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(notNullValue()))
-                .andExpect(jsonPath("$[0].name").value(is("name")))
-                .andExpect(jsonPath("$[0].country").value(is("country")))
+                .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
+                .andExpect(jsonPath("$[0].country").value(is("Poland")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
 
         mockMvc.perform(get("/radio-stations"))
@@ -46,8 +56,8 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").value(hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(notNullValue()))
-                .andExpect(jsonPath("$[0].name").value(is("name")))
-                .andExpect(jsonPath("$[0].country").value(is("country")))
+                .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
+                .andExpect(jsonPath("$[0].country").value(is("Poland")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
     }
 }
