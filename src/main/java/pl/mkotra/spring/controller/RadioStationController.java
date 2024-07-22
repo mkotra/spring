@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 @RequestMapping("/radio-stations")
 public class RadioStationController {
 
-    private static Logger logger = Logger.getLogger(RadioStationController.class.getName());
+    private static final Logger logger = Logger.getLogger(RadioStationController.class.getName());
 
     private final RadioStationService radioStationService;
 
