@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.1</version>
+        <version>3.3.2</version>
         <relativePath/>
     </parent>
 
@@ -21,8 +21,8 @@
         <java.version>22</java.version>
 
         <springdoc.version>2.5.0</springdoc.version>
-        <spring.cloud.consul.version>4.1.1</spring.cloud.consul.version>
-        <testcontainers.version>1.19.8</testcontainers.version>
+        <spring.cloud.consul.version>4.1.2</spring.cloud.consul.version>
+        <testcontainers.version>1.20.0</testcontainers.version>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <wiremock.version>3.5.4</wiremock.version>
 
@@ -60,6 +60,12 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-consul-discovery</artifactId>
             <version>${spring.cloud.consul.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-logging</groupId>
+                    <artifactId>commons-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
