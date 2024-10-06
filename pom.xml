@@ -19,17 +19,17 @@
 
     <properties>
         <java.version>23</java.version>
+        <maven.compiler.source>${java.version}</maven.compiler.source>
+        <maven.compiler.target>${java.version}</maven.compiler.target>
 
         <springdoc.version>2.6.0</springdoc.version>
         <spring.cloud.consul.version>4.1.2</spring.cloud.consul.version>
-        <testcontainers.version>1.20.1</testcontainers.version>
-        <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
+        <testcontainers.version>1.20.2</testcontainers.version>
+        <org.mapstruct.version>1.6.2</org.mapstruct.version>
         <wiremock.version>3.9.1</wiremock.version>
 
         <maven.build.helper.plugin.version>3.5.0</maven.build.helper.plugin.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
-        <maven.compiler.source>${java.version}</maven.compiler.source>
-        <maven.compiler.target>${java.version}</maven.compiler.target>
         <maven.failsafe.plugin.version>3.2.5</maven.failsafe.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
         <maven.jacoco.plugin.version>0.8.12</maven.jacoco.plugin.version>
