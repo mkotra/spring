@@ -1,7 +1,7 @@
 # spring
 
 You need: 
-- Java 22
+- Java 23
 - MongoDB (at least 5.0.0)
 - Consul running on default ports
 
