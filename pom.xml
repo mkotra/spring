@@ -7,7 +7,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.4</version>
+        <version>3.4.1</version>
         <relativePath/>
     </parent>
 
@@ -22,11 +22,11 @@
         <maven.compiler.source>${java.version}</maven.compiler.source>
         <maven.compiler.target>${java.version}</maven.compiler.target>
 
-        <springdoc.version>2.6.0</springdoc.version>
-        <spring.cloud.consul.version>4.1.2</spring.cloud.consul.version>
-        <testcontainers.version>1.20.2</testcontainers.version>
-        <org.mapstruct.version>1.6.2</org.mapstruct.version>
-        <wiremock.version>3.9.1</wiremock.version>
+        <springdoc.version>2.8.2</springdoc.version>
+        <spring.cloud.consul.version>4.2.0</spring.cloud.consul.version>
+        <testcontainers.version>1.20.4</testcontainers.version>
+        <org.mapstruct.version>1.6.3</org.mapstruct.version>
+        <wiremock.version>3.10.0</wiremock.version>
 
         <maven.build.helper.plugin.version>3.5.0</maven.build.helper.plugin.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
