@@ -8,7 +8,7 @@ You need:
 Docker and `docker-compose.yml` file can be used to set up infrastructure.
 
 ``
-docker-compose up
+docker compose up
 ``
 
 seed consul values: 

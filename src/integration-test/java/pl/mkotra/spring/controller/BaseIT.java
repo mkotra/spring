@@ -27,7 +27,7 @@ abstract class BaseIT {
     static final int RADIO_BROWSER_TEST_API_PORT = 9999;
 
     @Container
-    static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:5.0.0"));
+    static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:8.0.0"));
 
     static {
         mongo.start();
