@@ -7,7 +7,7 @@ import pl.mkotra.spring.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
 
-import java.time.OffsetDateTime;
+import java.time.Instant;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,8 +25,8 @@ public class RadioStationServiceTest {
     public void simpleUnitTest() {
         //given
         when(radioStationRepository.findAll()).thenReturn(List.of(
-                new RadioStationDB("ID", "Radio 1", "Poland", OffsetDateTime.now()),
-                new RadioStationDB("ID", "Radio 2", "Poland", OffsetDateTime.now()))
+                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", Instant.now()),
+                new RadioStationDB("id_1", "uuid_2", "Radio 2", "Poland", Instant.now()))
         );
 
         //when
@@ -36,7 +36,11 @@ public class RadioStationServiceTest {
         assertThat(result)
                 .hasSize(2)
                 .allSatisfy(radioStation -> {
+                    assertThat(radioStation.id()).isNotNull();
+                    assertThat(radioStation.uuid()).isNotNull();
                     assertThat(radioStation.name()).isNotNull();
+                    assertThat(radioStation.country()).isNotNull();
+                    assertThat(radioStation.timestamp()).isNotNull();
                 });
     }
 }
