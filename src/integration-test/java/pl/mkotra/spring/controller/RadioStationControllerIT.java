@@ -43,6 +43,7 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").value(hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].uuid").value(notNullValue()))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
@@ -53,6 +54,7 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$").value(hasSize(1)))
                 .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].uuid").value(notNullValue()))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));

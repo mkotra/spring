@@ -11,6 +11,7 @@ import java.time.OffsetDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.Supplier;
 
 @Component
@@ -39,7 +40,11 @@ public class RadioBrowserAdapter {
         return Optional.ofNullable(radioBrowserStations)
                 .stream()
                 .flatMap(Arrays::stream)
-                .map(s -> new RadioStation(null, s.name().trim(), s.country(), timestamp))
+                .map(s -> createRadioStation(s.name().trim(), s.country(), timestamp))
                 .toList();
+    }
+
+    private RadioStation createRadioStation(String name, String country, OffsetDateTime timestamp) {
+        return new RadioStation(null, UUID.randomUUID().toString(), name, country, timestamp);
     }
 }

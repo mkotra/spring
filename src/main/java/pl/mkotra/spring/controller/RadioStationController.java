@@ -1,5 +1,6 @@
 package pl.mkotra.spring.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mkotra.spring.core.RadioStationService;
 import pl.mkotra.spring.model.RadioStation;
@@ -27,9 +28,18 @@ public class RadioStationController {
     }
 
     @GetMapping
-    public Collection<RadioStation> findAll() {
-        logger.info("Finding radio stations using thread: " + Thread.currentThread());
+    public ResponseEntity<Collection<RadioStation>> getAll() {
+        logger.info("Getting radio stations using thread: " + Thread.currentThread());
 
-        return radioStationService.findAll();
+        return ResponseEntity.ok(radioStationService.findAll());
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<RadioStation> get(String id) {
+        logger.info("Getting radio station using thread: " + Thread.currentThread());
+
+        return radioStationService.find("id")
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

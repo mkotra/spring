@@ -7,15 +7,10 @@ import org.springframework.boot.autoconfigure.task.TaskExecutionAutoConfiguratio
 import org.springframework.boot.web.embedded.tomcat.TomcatProtocolHandlerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.convert.converter.Converter;
 import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.support.TaskExecutorAdapter;
-import org.springframework.data.mongodb.core.convert.MongoCustomConversions;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import pl.mkotra.spring.storage.converter.OffsetDateTimeReaderConverter;
-import pl.mkotra.spring.storage.converter.OffsetDateTimeWriterConverter;
 
-import java.util.List;
 import java.util.concurrent.Executors;
 
 @Configuration
@@ -30,16 +25,6 @@ public class ApplicationConfiguration {
         return objectMapper;
     }
 
-    @Bean
-    public MongoCustomConversions customConversions() {
-        List<Converter<?, ?>> converters = List.of(
-                new OffsetDateTimeReaderConverter(),
-                new OffsetDateTimeWriterConverter()
-        );
-
-        return new MongoCustomConversions(converters);
-    }
-
     // enable virtual threads
     @Bean(TaskExecutionAutoConfiguration.APPLICATION_TASK_EXECUTOR_BEAN_NAME)
     public AsyncTaskExecutor asyncTaskExecutor() {
@@ -48,9 +33,9 @@ public class ApplicationConfiguration {
 
     @Bean
     public TomcatProtocolHandlerCustomizer<?> protocolHandlerVirtualThreadExecutorCustomizer() {
-        return protocolHandler -> {
-            protocolHandler.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
-        };
+        return protocolHandler ->
+                protocolHandler.setExecutor(Executors.newVirtualThreadPerTaskExecutor());
+
     }
     // enable virtual threads
 }

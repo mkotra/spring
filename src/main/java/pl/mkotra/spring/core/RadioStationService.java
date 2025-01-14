@@ -7,6 +7,7 @@ import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class RadioStationService {
@@ -37,4 +38,8 @@ public class RadioStationService {
                 .toList();
     }
 
+    public Optional<RadioStation> find(String id) {
+        return radioStationRepository.findById(id)
+                .map(RadioStationMapper.INSTANCE::map);
+    }
 }

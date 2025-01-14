@@ -2,8 +2,9 @@
 
 You need: 
 - Java 23
-- MongoDB (at least 5.0.0)
+- MongoDB (8.0.0)
 - Consul running on default ports
+- Docker (optional)
 
 Docker and `docker-compose.yml` file can be used to set up infrastructure.
 
@@ -31,6 +32,10 @@ http://localhost:8500/
 
 Swagger-UI can be used to test REST API: 
 
+``
+http://localhost:${APPLICATION_PORT}/swagger-ui/index.html
+``
+or
 ``
 http://localhost:${APPLICATION_PORT}/
 ``
