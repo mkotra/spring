@@ -33,7 +33,11 @@ management:
   endpoints:
     web:
       exposure:
-        include: "*"
+        include: health,info,metrics,prometheus
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 
 spring-doc:
   api-docs:

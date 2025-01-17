@@ -1,5 +1,7 @@
 package pl.mkotra.spring.controller;
 
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mkotra.spring.core.RadioStationService;
@@ -15,16 +17,24 @@ public class RadioStationController {
     private static final Logger logger = Logger.getLogger(RadioStationController.class.getName());
 
     private final RadioStationService radioStationService;
+    private final MeterRegistry meterRegistry;
+    private final Timer timer;
 
-    public RadioStationController(RadioStationService radioStationService) {
+    public RadioStationController(RadioStationService radioStationService, MeterRegistry meterRegistry) {
         this.radioStationService = radioStationService;
+        this.meterRegistry = meterRegistry;
+        this.timer = Timer.builder("pull_radio_stations_time")
+                .description("Time taken for pull operation")
+                .register(meterRegistry);
     }
 
     @PostMapping("/pull")
     public Collection<RadioStation> pull(@RequestParam int limit) {
         logger.info("Pulling radio stations using thread: " + Thread.currentThread());
 
-        return radioStationService.pull(limit);
+        meterRegistry.counter("pull_radio_stations_count").increment();
+
+        return timer.record(() -> radioStationService.pull(limit));
     }
 
     @GetMapping

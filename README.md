@@ -35,9 +35,15 @@ Swagger-UI can be used to test REST API:
 ``
 http://localhost:${APPLICATION_PORT}/swagger-ui/index.html
 ``
-or
+
+Metrics can be checked at:
+
 ``
-http://localhost:${APPLICATION_PORT}/
+http://localhost:${APPLICATION_PORT}/actuator/metrics
+``
+
+``
+http://localhost:${APPLICATION_PORT}/actuator/prometheus
 ``
 
 [![Java CI with Maven](https://github.com/mkotra/spring/actions/workflows/maven.yml/badge.svg)](https://github.com/mkotra/spring/actions/workflows/maven.yml)
