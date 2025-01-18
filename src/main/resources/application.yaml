@@ -25,7 +25,11 @@ spring:
         healthCheckInterval: 5s
       config:
         enabled: true
-
+  kafka:
+    bootstrap-servers: localhost:9093
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
 management:
   endpoint:
     health:
@@ -34,9 +38,9 @@ management:
     web:
       exposure:
         include: health,info,metrics,prometheus
-  metrics:
-    export:
-      prometheus:
+  prometheus:
+    metrics:
+      export:
         enabled: true
 
 spring-doc:
@@ -48,3 +52,4 @@ spring-doc:
 
 integration:
   radio-browser-api-url: "http://de1.api.radio-browser.info:80"
+  radio-station-pulled-topic: radio-station-pulled

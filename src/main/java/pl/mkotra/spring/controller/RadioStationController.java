@@ -48,7 +48,7 @@ public class RadioStationController {
     public ResponseEntity<RadioStation> get(String id) {
         logger.info("Getting radio station using thread: " + Thread.currentThread());
 
-        return radioStationService.find("id")
+        return radioStationService.find(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }

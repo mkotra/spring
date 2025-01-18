@@ -2,6 +2,7 @@ package pl.mkotra.spring;
 
 import org.junit.jupiter.api.Test;
 import pl.mkotra.spring.core.RadioStationService;
+import pl.mkotra.spring.integration.KafkaProducer;
 import pl.mkotra.spring.integration.RadioBrowserAdapter;
 import pl.mkotra.spring.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
@@ -18,8 +19,9 @@ public class RadioStationServiceTest {
 
     RadioStationRepository radioStationRepository = mock(RadioStationRepository.class);
     RadioBrowserAdapter radioBrowserAdapter = mock(RadioBrowserAdapter.class);
+    KafkaProducer kafkaProducer = mock(KafkaProducer.class);
 
-    RadioStationService radioStationService = new RadioStationService(radioStationRepository, radioBrowserAdapter);
+    RadioStationService radioStationService = new RadioStationService(radioStationRepository, radioBrowserAdapter, kafkaProducer);
 
     @Test
     public void simpleUnitTest() {

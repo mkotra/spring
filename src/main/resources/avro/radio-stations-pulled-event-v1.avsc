@@ -1,0 +1,9 @@
+{
+  "namespace": "pl.mkotra.spring.avro",
+  "type": "record",
+  "name": "RadioStationsPulledEvent",
+  "fields": [
+    { "name": "eventId", "type": "string" },
+    { "name": "size", "type": "int" }
+  ]
+}

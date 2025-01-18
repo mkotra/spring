@@ -1,6 +1,7 @@
 package pl.mkotra.spring.core;
 
 import org.springframework.stereotype.Service;
+import pl.mkotra.spring.integration.KafkaProducer;
 import pl.mkotra.spring.integration.RadioBrowserAdapter;
 import pl.mkotra.spring.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
@@ -14,11 +15,14 @@ public class RadioStationService {
 
     private final RadioStationRepository radioStationRepository;
     private final RadioBrowserAdapter radioBrowserAdapter;
+    private final KafkaProducer kafkaProducer;
 
     public RadioStationService(RadioStationRepository radioStationRepository,
-                               RadioBrowserAdapter radioBrowserAdapter) {
+                               RadioBrowserAdapter radioBrowserAdapter,
+                               KafkaProducer kafkaProducer) {
         this.radioStationRepository = radioStationRepository;
         this.radioBrowserAdapter = radioBrowserAdapter;
+        this.kafkaProducer = kafkaProducer;
     }
 
     public List<RadioStation> pull(int limit) {
@@ -27,9 +31,12 @@ public class RadioStationService {
         List<RadioStationDB> radioStationsDB = radioStations.stream()
                 .map(RadioStationMapper.INSTANCE::map)
                 .toList();
-        return radioStationRepository.saveAll(radioStationsDB).stream()
+        List<RadioStation> saved = radioStationRepository.saveAll(radioStationsDB).stream()
                 .map(RadioStationMapper.INSTANCE::map)
                 .toList();
+
+        kafkaProducer.sendMessage(saved.size());
+        return saved;
     }
 
     public List<RadioStation> findAll() {

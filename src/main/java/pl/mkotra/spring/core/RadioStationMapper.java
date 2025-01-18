@@ -1,7 +1,7 @@
 package pl.mkotra.spring.core;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+
+import pl.mkotra.spring.core.RadioStationMapperImpl;
 import pl.mkotra.spring.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
 
@@ -10,9 +10,8 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.time.temporal.ChronoUnit;
 
-@Mapper
 interface RadioStationMapper {
-    RadioStationMapper INSTANCE = Mappers.getMapper(RadioStationMapper.class);
+    RadioStationMapper INSTANCE = new RadioStationMapperImpl();
     RadioStation map(RadioStationDB item);
     RadioStationDB map(RadioStation item);
 
