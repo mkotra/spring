@@ -1,0 +1,16 @@
+global:
+  scrape_interval: 15s  # Prometheus scrapes every 15 seconds
+
+scrape_configs:
+  - job_name: 'demo-app'
+    consul_sd_configs:
+      - server: 'consul:8500'  # Consul server address
+        services: ['demo']  # Service name registered in Consul
+    metrics_path: '/actuator/prometheus'
+    relabel_configs:
+      - source_labels: [__meta_consul_service_address]
+        target_label: __address__
+      - source_labels: [__meta_consul_service_port]
+        target_label: __param_target
+      - target_label: instance
+        replacement: 'demo-app'
