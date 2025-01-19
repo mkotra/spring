@@ -1,6 +1,7 @@
 # spring
 
 This is a fully functional Spring Boot application that allows to pull radio station list provieded by https://www.radio-browser.info/
+
 Radio stations will be saved in MongoDB and then can be returned. This is just for the purpose of this demo. 
 
 Apart from the application logic which is quite simple, there are few nice features configured: 
