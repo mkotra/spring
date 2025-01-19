@@ -46,4 +46,30 @@ http://localhost:${APPLICATION_PORT}/actuator/metrics
 http://localhost:${APPLICATION_PORT}/actuator/prometheus
 ``
 
+Prometheus dashboard is available here: 
+
+``
+http://localhost:9090  
+``
+
+Some example metrics can be used to test: 
+
+``
+ rate(pull_radio_stations_count_total[1m])
+``
+
+``
+ pull_radio_stations_time_seconds_count
+``
+
+``
+ pull_radio_stations_time_seconds_max
+``
+
+``
+ pull_radio_stations_time_seconds_sum 
+``
+
+
+
 [![Java CI with Maven](https://github.com/mkotra/spring/actions/workflows/maven.yml/badge.svg)](https://github.com/mkotra/spring/actions/workflows/maven.yml)
