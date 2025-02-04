@@ -32,8 +32,12 @@ public class RadioBrowserAdapter {
 
     public List<RadioStation> getRadioStations(int limit) {
         OffsetDateTime timestamp = timeSupplier.get();
+
         RadioBrowserStation[] radioBrowserStations = restClient.get()
-                .uri("/json/stations?limit=" + limit)
+                .uri(uriBuilder -> uriBuilder
+                        .path("/json/stations")
+                        .queryParam("limit", limit)
+                        .build())
                 .retrieve()
                 .body(RadioBrowserStation[].class);
 

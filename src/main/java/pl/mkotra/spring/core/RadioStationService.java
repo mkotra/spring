@@ -23,10 +23,10 @@ public class RadioStationService {
 
     public List<RadioStation> pull(int limit) {
         List<RadioStation> radioStations = radioBrowserAdapter.getRadioStations(limit);
-        radioStationRepository.deleteAll();
         List<RadioStationDB> radioStationsDB = radioStations.stream()
                 .map(RadioStationMapper.INSTANCE::map)
                 .toList();
+        radioStationRepository.deleteAll();
         return radioStationRepository.saveAll(radioStationsDB).stream()
                 .map(RadioStationMapper.INSTANCE::map)
                 .toList();
