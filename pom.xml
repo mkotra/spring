@@ -191,10 +191,22 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
-                    <argLine>-XX:+EnableDynamicAgentLoading ${surefire.jacoco.args}</argLine>
+                    <argLine>-XX:+EnableDynamicAgentLoading -javaagent:${org.mockito:mockito-core:jar} ${surefire.jacoco.args}</argLine>
                     <includes>
                         <include>**/*Test.class</include>
                     </includes>
@@ -206,7 +218,7 @@
                 <artifactId>maven-failsafe-plugin</artifactId>
                 <version>${maven.failsafe.plugin.version}</version>
                 <configuration>
-                    <argLine>-XX:+EnableDynamicAgentLoading ${failsafe.jacoco.args}</argLine>
+                    <argLine>-XX:+EnableDynamicAgentLoading -javaagent:${org.mockito:mockito-core:jar} ${failsafe.jacoco.args}</argLine>
                     <includes>
                         <include>**/*IT.class</include>
                     </includes>
