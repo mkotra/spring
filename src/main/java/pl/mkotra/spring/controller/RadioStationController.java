@@ -45,7 +45,7 @@ public class RadioStationController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RadioStation> get(String id) {
+    public ResponseEntity<RadioStation> get(@PathVariable String id) {
         logger.info("Getting radio station using thread: " + Thread.currentThread());
 
         return radioStationService.find(id)

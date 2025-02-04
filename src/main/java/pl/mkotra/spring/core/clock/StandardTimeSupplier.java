@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
 import java.util.TimeZone;
 import java.util.function.Supplier;
 
@@ -14,6 +15,6 @@ public class StandardTimeSupplier implements Supplier<OffsetDateTime> {
 
     @Override
     public OffsetDateTime get() {
-        return OffsetDateTime.now(UTC_ZONE_ID);
+        return OffsetDateTime.now(UTC_ZONE_ID).truncatedTo(ChronoUnit.MILLIS);
     }
 }
