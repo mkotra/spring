@@ -26,7 +26,7 @@
         <spring.cloud.consul.version>4.2.0</spring.cloud.consul.version>
         <testcontainers.version>1.20.4</testcontainers.version>
         <org.mapstruct.version>1.6.3</org.mapstruct.version>
-        <wiremock.version>3.10.0</wiremock.version>
+        <wiremock.version>3.11.0</wiremock.version>
 
         <maven.build.helper.plugin.version>3.5.0</maven.build.helper.plugin.version>
         <maven.compiler.plugin.version>3.13.0</maven.compiler.plugin.version>
