@@ -1,5 +1,6 @@
 package pl.mkotra.spring;
 
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import pl.mkotra.spring.core.RadioStationService;
 import pl.mkotra.spring.integration.RadioBrowserAdapter;
@@ -8,14 +9,14 @@ import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class RadioStationServiceTest {
 
@@ -25,11 +26,45 @@ public class RadioStationServiceTest {
     RadioStationService radioStationService = new RadioStationService(radioStationRepository, radioBrowserAdapter);
 
     @Test
+    @DisplayName("pull saves radio stations and returns valid response")
+    public void pull() {
+        //given
+        int limit = 100;
+        when(radioBrowserAdapter.getRadioStations(limit)).thenReturn(List.of(
+                new RadioStation("id_1", "uuid_1", "Radio 1", "Poland", OffsetDateTime.now()),
+                new RadioStation("id_2", "uuid_2", "Radio 2", "Poland", OffsetDateTime.now()))
+        );
+        when(radioStationRepository.saveAll(anyList())).thenReturn(List.of(
+                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", Instant.now()),
+                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", Instant.now()))
+        );
+
+        //when
+        List<RadioStation> result = radioStationService.pull(limit);
+
+        //then
+        assertThat(result)
+                .hasSize(2)
+                .allSatisfy(radioStation -> {
+                    assertThat(radioStation.id()).isNotNull();
+                    assertThat(radioStation.uuid()).isNotNull();
+                    assertThat(radioStation.name()).isNotNull();
+                    assertThat(radioStation.country()).isNotNull();
+                    assertThat(radioStation.timestamp()).isNotNull();
+                });
+
+        verify(radioBrowserAdapter).getRadioStations(limit);
+        verify(radioStationRepository).deleteAll();
+        verify(radioStationRepository).saveAll(anyList());
+    }
+
+    @Test
+    @DisplayName("findAll returns valid response")
     public void findAll() {
         //given
         when(radioStationRepository.findAll()).thenReturn(List.of(
                 new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", Instant.now()),
-                new RadioStationDB("id_1", "uuid_2", "Radio 2", "Poland", Instant.now()))
+                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", Instant.now()))
         );
 
         //when
@@ -48,6 +83,7 @@ public class RadioStationServiceTest {
     }
 
     @Test
+    @DisplayName("find returns valid response")
     public void find() {
         //given
         String id = "id_1";
