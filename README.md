@@ -14,8 +14,8 @@ To run everything You need:
 - Java 23
 - MongoDB (8.0.0)
 - Consul running on default ports
-- Docker (optional
 - Prometheus
+- Docker (optional - it is required for unit tests and can also set up MongoDB, Consul and Prometheus)
 
 Docker and `docker-compose.yml` file can be used to set up infrastructure.
 
