@@ -1,6 +1,5 @@
 package pl.mkotra.spring.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -11,11 +10,14 @@ import pl.mkotra.spring.DistributedProperties;
 @RefreshScope
 public class DistributedPropertiesController {
 
-    @Value("${distributed.property}")
-    String value;
+    private final DistributedProperties distributedProperties;
+    private final String value;
 
-    @Autowired
-    private DistributedProperties distributedProperties;
+    public DistributedPropertiesController(DistributedProperties distributedProperties,
+                                           @Value("${distributed.property}") String value) {
+        this.distributedProperties = distributedProperties;
+        this.value = value;
+    }
 
     @GetMapping("/getConfigFromValue")
     public String getConfigFromValue() {
