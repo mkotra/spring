@@ -2,6 +2,7 @@ package pl.mkotra.spring.controller;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Timer;
+import jakarta.validation.constraints.Max;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.mkotra.spring.core.RadioStationService;
@@ -29,7 +30,7 @@ public class RadioStationController {
     }
 
     @PostMapping("/pull")
-    public Collection<RadioStation> pull(@RequestParam int limit) {
+    public Collection<RadioStation> pull(@RequestParam @Max(1000) int limit) {
         logger.info("Pulling radio stations using thread: " + Thread.currentThread());
 
         meterRegistry.counter("pull_radio_stations_count").increment();

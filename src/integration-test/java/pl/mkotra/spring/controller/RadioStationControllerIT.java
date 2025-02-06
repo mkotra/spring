@@ -79,6 +79,13 @@ public class RadioStationControllerIT extends BaseIT {
     }
 
     @Test
+    void pullWithInvalidLimit() throws Exception {
+        mockMvc.perform(post("/radio-stations/pull").param("limit", "1001"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
     void getRadioStationsWithEmptyResponse() throws Exception {
         mockMvc.perform(get("/radio-stations"))
                 .andDo(print())
