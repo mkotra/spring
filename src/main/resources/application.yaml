@@ -47,7 +47,7 @@ spring-doc:
     use-root-path: true
 
 integration:
-  radio-browser-api-url: "http://de1.api.radio-browser.info:80"
+  radio-browser-api-url: "https://de1.api.radio-browser.info:443"
 
 resilience4j:
   retry:
