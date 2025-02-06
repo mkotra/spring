@@ -29,8 +29,6 @@ public class RadioBrowserAdapter {
     }
 
     public List<RadioStation> getRadioStations(int limit) {
-
-
         return Retry.decorateCheckedSupplier(retry, () -> {
             logger.info("Retrieving radio stations from external service...");
             RadioBrowserStation[] radioBrowserStations = restClient.get()
