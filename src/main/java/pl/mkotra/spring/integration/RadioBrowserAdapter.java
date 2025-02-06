@@ -29,7 +29,7 @@ public class RadioBrowserAdapter {
     }
 
     public List<RadioStation> getRadioStations(int limit) {
-        OffsetDateTime timestamp = timeSupplier.get();
+
 
         return Retry.decorateCheckedSupplier(retry, () -> {
             logger.info("Retrieving radio stations from external service...");
@@ -40,6 +40,8 @@ public class RadioBrowserAdapter {
                             .build())
                     .retrieve()
                     .body(RadioBrowserStation[].class);
+
+            OffsetDateTime timestamp = timeSupplier.get();
 
             return Optional.ofNullable(radioBrowserStations)
                     .stream()
