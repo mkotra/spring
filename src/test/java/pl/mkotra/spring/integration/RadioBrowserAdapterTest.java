@@ -1,5 +1,6 @@
 package pl.mkotra.spring.integration;
 
+import io.github.resilience4j.retry.RetryRegistry;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
 import pl.mkotra.spring.model.RadioStation;
@@ -10,7 +11,6 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class RadioBrowserAdapterTest {
@@ -18,8 +18,9 @@ class RadioBrowserAdapterTest {
     private final RestClient restClient = mock(RestClient.class);
     @SuppressWarnings("unchecked")
     private final Supplier<OffsetDateTime> timeSupplier = mock(Supplier.class);
+    private final RetryRegistry retryRegistry = RetryRegistry.ofDefaults();
 
-    private final RadioBrowserAdapter radioBrowserAdapter = new RadioBrowserAdapter(timeSupplier, restClient);
+    private final RadioBrowserAdapter radioBrowserAdapter = new RadioBrowserAdapter(timeSupplier, restClient, retryRegistry);
 
     @Test
     void shouldReturnListOfRadioStations_whenApiReturnsData() {

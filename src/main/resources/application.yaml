@@ -48,3 +48,14 @@ spring-doc:
 
 integration:
   radio-browser-api-url: "http://de1.api.radio-browser.info:80"
+
+resilience4j:
+  retry:
+    instances:
+      radioBrowserRetry:
+        maxAttempts: 3
+        waitDuration: 2000ms
+        retryExceptions:
+          - org.springframework.web.client.HttpServerErrorException
+          - java.net.ConnectException
+
