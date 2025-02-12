@@ -54,6 +54,7 @@ public abstract class BaseIT {
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.uri", MONGO::getReplicaSetUrl);
         registry.add("integration.radio-browser-api-url", () -> "http://localhost:" + RADIO_BROWSER_TEST_API_PORT);
+        registry.add("resilience4j.ratelimiter.instances.radioBrowserRateLimiter.enabled", () -> "false");
         registry.add("distributed.property", () -> "dummy");
     }
 }

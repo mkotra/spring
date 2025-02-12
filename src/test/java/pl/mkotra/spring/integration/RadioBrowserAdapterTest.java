@@ -1,5 +1,6 @@
 package pl.mkotra.spring.integration;
 
+import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import io.github.resilience4j.retry.RetryRegistry;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
@@ -19,9 +20,10 @@ class RadioBrowserAdapterTest {
     @SuppressWarnings("unchecked")
     private final Supplier<OffsetDateTime> timeSupplier = mock(Supplier.class);
     private final RetryRegistry retryRegistry = RetryRegistry.ofDefaults();
+    private final RateLimiterRegistry rateLimiterRegistry = RateLimiterRegistry.ofDefaults();
     private final RadioStationFactory radioStationFactory = mock(RadioStationFactory.class);
 
-    private final RadioBrowserAdapter radioBrowserAdapter = new RadioBrowserAdapter(timeSupplier, restClient, retryRegistry, radioStationFactory);
+    private final RadioBrowserAdapter radioBrowserAdapter = new RadioBrowserAdapter(timeSupplier, restClient, retryRegistry, rateLimiterRegistry, radioStationFactory);
 
     @Test
     void shouldReturnListOfRadioStations_whenApiReturnsData() {
@@ -45,9 +47,7 @@ class RadioBrowserAdapterTest {
         assertThat(result)
                 .isNotNull()
                 .hasSize(2)
-                .allSatisfy(station -> {
-                    assertThat(station.id()).isNull();
-                });
+                .allSatisfy(station -> assertThat(station.id()).isNull());
 
         verify(timeSupplier).get();
         verify(restClient).get();

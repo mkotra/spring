@@ -14,9 +14,9 @@ spring:
   config:
     import: "optional:consul:localhost:8500"
   cloud:
-    host: localhost
-    port: 8500
     consul:
+      host: localhost
+      port: 8500
       discovery:
         enabled: true
         instance-group: demo
@@ -25,6 +25,9 @@ spring:
         healthCheckInterval: 5s
       config:
         enabled: true
+    loadbalancer:
+      cache:
+        enabled: false
 
 management:
   endpoint:
@@ -52,10 +55,15 @@ integration:
 resilience4j:
   retry:
     instances:
-      radioBrowserRetry:
+      radio-browser-retry:
         maxAttempts: 3
         waitDuration: 2000ms
         retryExceptions:
           - org.springframework.web.client.HttpServerErrorException
           - java.net.ConnectException
-
+  ratelimiter:
+    instances:
+      radio-browser-rate-limiter:
+        limit-for-period: 1
+        limit-refresh-period: 5s
+        timeout-duration: 0
