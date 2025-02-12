@@ -71,7 +71,6 @@ class RadioStationFactoryTest {
         assertThat(result.timestamp()).isEqualTo(timestamp);
     }
 
-
     @Test
     void create_withMultipleTags_shouldCreateRadioStationWithCorrectTags() {
         //given
