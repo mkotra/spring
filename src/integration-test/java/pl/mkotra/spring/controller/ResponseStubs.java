@@ -8,7 +8,7 @@ class ResponseStubs {
                                 "stationuuid" : "123e4567-e89b-12d3-a456-426655440000",
                                 "name" : "Radio 1",
                                 "country" : "Poland",
-                                "url": "http://www.example.com/test.pls",
+                                "url": "https://www.example.com/test.pls",
                                 "tags": "jazz,pop,rock,indie"
                             }
                         ]

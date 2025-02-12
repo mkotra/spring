@@ -47,7 +47,7 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$[0].uuid").value(notNullValue()))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
-                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].url").value(is("https://www.example.com/test.pls")))
                 .andExpect(jsonPath("$[0].tags").isArray())
                 .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
@@ -63,7 +63,7 @@ public class RadioStationControllerIT extends BaseIT {
     @Test
     void getAll() throws Exception {
         radioStationRepository.save(new RadioStationDB(null, "123e4567-e89b-12d3-a456-426655440000", "Radio 1", "Poland",
-                "http://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
+                "https://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
 
         mockMvc.perform(get("/radio-stations"))
                 .andDo(print())
@@ -74,7 +74,7 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$[0].uuid").value(is("123e4567-e89b-12d3-a456-426655440000")))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
-                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].url").value(is("https://www.example.com/test.pls")))
                 .andExpect(jsonPath("$[0].tags").isArray())
                 .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
@@ -92,7 +92,7 @@ public class RadioStationControllerIT extends BaseIT {
     @Test
     void search() throws Exception {
         radioStationRepository.save(new RadioStationDB(null, "123e4567-e89b-12d3-a456-426655440000", "Radio 1", "Poland",
-                "http://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
+                "https://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
 
         mockMvc.perform(get("/radio-stations/search").param("tags", "jazz", "pop"))
                 .andDo(print())
@@ -103,7 +103,7 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$[0].uuid").value(is("123e4567-e89b-12d3-a456-426655440000")))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
-                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].url").value(is("https://www.example.com/test.pls")))
                 .andExpect(jsonPath("$[0].tags").isArray())
                 .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
@@ -119,7 +119,7 @@ public class RadioStationControllerIT extends BaseIT {
     @Test
     void getById() throws Exception {
         RadioStationDB radioStationDB = radioStationRepository.save(new RadioStationDB(null, "123e4567-e89b-12d3-a456-426655440000", "Radio 1", "Poland",
-                "http://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
+                "https://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
 
         mockMvc.perform(get("/radio-stations/{id}", radioStationDB.id()))
                 .andDo(print())
@@ -128,7 +128,7 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$.uuid").value(is("123e4567-e89b-12d3-a456-426655440000")))
                 .andExpect(jsonPath("$.name").value(is("Radio 1")))
                 .andExpect(jsonPath("$.country").value(is("Poland")))
-                .andExpect(jsonPath("$.url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$.url").value(is("https://www.example.com/test.pls")))
                 .andExpect(jsonPath("$.tags").isArray())
                 .andExpect(jsonPath("$.tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$.timestamp").value(notNullValue()));
