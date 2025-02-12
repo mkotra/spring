@@ -1,4 +1,4 @@
-# spring
+# Radio Browser Spring Boot Demo
 
 This is a fully functional Spring Boot application that allows to pull radio station list provieded by https://www.radio-browser.info/
 
