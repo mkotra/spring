@@ -67,7 +67,9 @@ public class RadioStationRetryIT extends BaseIT {
                         .withStatus(500)
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                         .withBody("""
-                                {"error":"Server Error"}"""
+                                {
+                                    "error" : "Server Error"
+                                }"""
                         )
                 )
         );
