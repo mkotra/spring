@@ -2,7 +2,7 @@ package pl.mkotra.spring.core;
 
 import org.springframework.stereotype.Service;
 import pl.mkotra.spring.integration.RadioBrowserAdapter;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.core.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
 

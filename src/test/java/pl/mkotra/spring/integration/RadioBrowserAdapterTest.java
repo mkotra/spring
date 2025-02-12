@@ -4,7 +4,7 @@ import io.github.resilience4j.ratelimiter.RateLimiterRegistry;
 import io.github.resilience4j.retry.RetryRegistry;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.client.RestClient;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.core.model.RadioStation;
 
 import java.time.OffsetDateTime;
 import java.util.List;

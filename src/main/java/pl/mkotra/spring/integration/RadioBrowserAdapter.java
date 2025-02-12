@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.core.model.RadioStation;
 import java.time.OffsetDateTime;
 import java.util.*;
 import java.util.function.Supplier;

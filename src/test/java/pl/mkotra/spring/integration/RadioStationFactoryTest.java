@@ -1,7 +1,7 @@
 package pl.mkotra.spring.integration;
 
 import org.junit.jupiter.api.Test;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.core.model.RadioStation;
 
 import java.time.OffsetDateTime;
 

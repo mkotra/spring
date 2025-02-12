@@ -1,4 +1,4 @@
-package pl.mkotra.spring.model;
+package pl.mkotra.spring.core.model;
 
 import java.time.OffsetDateTime;
 import java.util.List;

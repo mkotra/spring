@@ -2,7 +2,7 @@ package pl.mkotra.spring.core;
 
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.core.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
 
 import java.time.Instant;

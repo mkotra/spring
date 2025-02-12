@@ -1,7 +1,7 @@
 package pl.mkotra.spring.integration;
 
 import org.springframework.stereotype.Component;
-import pl.mkotra.spring.model.RadioStation;
+import pl.mkotra.spring.core.model.RadioStation;
 
 import java.time.OffsetDateTime;
 import java.util.*;
