@@ -14,7 +14,7 @@ class RadioStationFactoryTest {
     @Test
     void create_withValidRadioBrowserStation_shouldCreateRadioStation() {
         //given
-        RadioBrowserStation radioBrowserStation = radioBrowserStations("music, sport");
+        RadioBrowserStation radioBrowserStation = radioBrowserStations("music, sports");
         OffsetDateTime timestamp = OffsetDateTime.now();
 
         //when
@@ -27,7 +27,7 @@ class RadioStationFactoryTest {
         assertThat(result.name()).isEqualTo("Test Station");
         assertThat(result.country()).isEqualTo("Test Country");
         assertThat(result.url()).isEqualTo( "https://test.url");
-        assertThat(result.tags()).containsExactly("music", "sport");
+        assertThat(result.tags()).containsExactly("music", "sports");
         assertThat(result.timestamp()).isEqualTo(timestamp);
     }
 
