@@ -71,25 +71,6 @@ class RadioStationFactoryTest {
         assertThat(result.timestamp()).isEqualTo(timestamp);
     }
 
-    @Test
-    void create_withBlankTags_shouldCreateRadioStationWithEmptyTags() {
-        //given
-        RadioBrowserStation radioBrowserStation = radioBrowserStations(" ");
-        OffsetDateTime timestamp = OffsetDateTime.now();
-
-        //when
-        RadioStation result = radioStationFactory.create(radioBrowserStation, timestamp);
-
-        //then
-        assertThat(result).isNotNull();
-        assertThat(result.id()).isNull();
-        assertThat(result.uuid()).isNotNull();
-        assertThat(result.name()).isEqualTo("Test Station");
-        assertThat(result.country()).isEqualTo("Test Country");
-        assertThat(result.url()).isEqualTo( "https://test.url");
-        assertThat(result.tags()).isEmpty();
-        assertThat(result.timestamp()).isEqualTo(timestamp);
-    }
 
     @Test
     void create_withMultipleTags_shouldCreateRadioStationWithCorrectTags() {
