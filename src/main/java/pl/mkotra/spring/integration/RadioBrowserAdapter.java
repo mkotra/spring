@@ -46,7 +46,6 @@ public class RadioBrowserAdapter {
                     .flatMap(Arrays::stream)
                     .map(s -> createRadioStation(s.name().trim(), s.country(), timestamp))
                     .toList();
-
         }).unchecked().get();
     }
 

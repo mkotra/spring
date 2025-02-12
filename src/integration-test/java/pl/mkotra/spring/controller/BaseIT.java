@@ -41,17 +41,6 @@ abstract class BaseIT {
     @Autowired
     MockMvc mockMvc;
 
-    @Autowired
-    protected ObjectMapper objectMapper;
-
-    protected String toJson(Object value) {
-        try {
-            return objectMapper.writeValueAsString(value);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     @AfterEach
     public void tearDown() {
     }
