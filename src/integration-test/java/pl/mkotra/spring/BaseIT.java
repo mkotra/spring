@@ -1,9 +1,8 @@
-package pl.mkotra.spring.controller;
+package pl.mkotra.spring;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.junit5.WireMockExtension;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.jupiter.api.extension.RegisterExtension;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,15 +21,14 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @SpringBootTest(properties = "spring.profiles.include=tests")
 @ExtendWith(SpringExtension.class)
 @AutoConfigureMockMvc
-abstract class BaseIT {
+public abstract class BaseIT {
 
     static final int RADIO_BROWSER_TEST_API_PORT = 9999;
 
     @Container
-    static final MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:8.0.0"));
-
+    static final MongoDBContainer MONGO = new MongoDBContainer(DockerImageName.parse("mongo:8.0.0"));
     static {
-        mongo.start();
+        MONGO.start();
     }
 
     @RegisterExtension
@@ -39,7 +37,11 @@ abstract class BaseIT {
             .build();
 
     @Autowired
-    MockMvc mockMvc;
+    protected MockMvc mockMvc;
+
+    @BeforeEach
+    void setUp() {
+    }
 
     @AfterEach
     public void tearDown() {
@@ -50,7 +52,7 @@ abstract class BaseIT {
         registry.add("spring.cloud.consul.enabled", () -> "false");
         registry.add("spring.data.mongodb.database", () -> "demo");
         registry.add("spring.data.mongodb.database", () -> "demo");
-        registry.add("spring.data.mongodb.uri", mongo::getReplicaSetUrl);
+        registry.add("spring.data.mongodb.uri", MONGO::getReplicaSetUrl);
         registry.add("integration.radio-browser-api-url", () -> "http://localhost:" + RADIO_BROWSER_TEST_API_PORT);
         registry.add("distributed.property", () -> "dummy");
     }

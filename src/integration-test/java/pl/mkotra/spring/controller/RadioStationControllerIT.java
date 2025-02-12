@@ -1,12 +1,16 @@
 package pl.mkotra.spring.controller;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import pl.mkotra.spring.BaseIT;
+import pl.mkotra.spring.storage.RadioStationDB;
 import pl.mkotra.spring.storage.RadioStationRepository;
+
+import java.time.Instant;
+import java.util.List;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
 import static org.hamcrest.Matchers.*;
@@ -21,14 +25,8 @@ public class RadioStationControllerIT extends BaseIT {
     @Autowired
     RadioStationRepository radioStationRepository;
 
-    @BeforeEach
-    void setUp() {
-        radioStationRepository.deleteAll();
-    }
-
     @Test
-    void pullAndGetRadioStations() throws Exception {
-
+    void pullStations() throws Exception {
         wireMockExtension.stubFor(WireMock.get("/json/stations?limit=10").willReturn(aResponse()
                 .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
                 .withBody(ResponseStubs.STUB_RESPONSE_BODY)
@@ -47,35 +45,6 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$[0].tags").isArray())
                 .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
-
-
-        mockMvc.perform(get("/radio-stations"))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$").value(hasSize(1)))
-                .andExpect(jsonPath("$[0].id").value(notNullValue()))
-                .andExpect(jsonPath("$[0].uuid").value(notNullValue()))
-                .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
-                .andExpect(jsonPath("$[0].country").value(is("Poland")))
-                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
-                .andExpect(jsonPath("$[0].tags").isArray())
-                .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
-                .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
-
-        String radioStationId = radioStationRepository.findAll().getFirst().id();
-
-        mockMvc.perform(get("/radio-stations/{id}", radioStationId))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(notNullValue()))
-                .andExpect(jsonPath("$.uuid").value(notNullValue()))
-                .andExpect(jsonPath("$.name").value(is("Radio 1")))
-                .andExpect(jsonPath("$.country").value(is("Poland")))
-                .andExpect(jsonPath("$.url").value(is("http://www.example.com/test.pls")))
-                .andExpect(jsonPath("$.tags").isArray())
-                .andExpect(jsonPath("$.tags").value(hasItems("jazz", "pop", "rock", "indie")))
-                .andExpect(jsonPath("$.timestamp").value(notNullValue()));
     }
 
     @Test
@@ -86,7 +55,27 @@ public class RadioStationControllerIT extends BaseIT {
     }
 
     @Test
-    void getRadioStationsWithEmptyResponse() throws Exception {
+    void getAll() throws Exception {
+        radioStationRepository.save(new RadioStationDB(null, "123e4567-e89b-12d3-a456-426655440000", "Radio 1", "Poland",
+                "http://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
+
+        mockMvc.perform(get("/radio-stations"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].uuid").value(is("123e4567-e89b-12d3-a456-426655440000")))
+                .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
+                .andExpect(jsonPath("$[0].country").value(is("Poland")))
+                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].tags").isArray())
+                .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
+                .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
+    }
+
+    @Test
+    void getAllWithEmptyResponse() throws Exception {
         mockMvc.perform(get("/radio-stations"))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -95,7 +84,52 @@ public class RadioStationControllerIT extends BaseIT {
     }
 
     @Test
-    void getRadioStationWhenDoesNotExist() throws Exception {
+    void search() throws Exception {
+        radioStationRepository.save(new RadioStationDB(null, "123e4567-e89b-12d3-a456-426655440000", "Radio 1", "Poland",
+                "http://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
+
+        mockMvc.perform(get("/radio-stations/search").param("tags", "jazz", "pop"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").isArray())
+                .andExpect(jsonPath("$").value(hasSize(1)))
+                .andExpect(jsonPath("$[0].id").value(notNullValue()))
+                .andExpect(jsonPath("$[0].uuid").value(is("123e4567-e89b-12d3-a456-426655440000")))
+                .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
+                .andExpect(jsonPath("$[0].country").value(is("Poland")))
+                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].tags").isArray())
+                .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
+                .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
+    }
+
+    @Test
+    void searchWithoutTags() throws Exception {
+        mockMvc.perform(get("/radio-stations/search"))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void getById() throws Exception {
+        RadioStationDB radioStationDB = radioStationRepository.save(new RadioStationDB(null, "123e4567-e89b-12d3-a456-426655440000", "Radio 1", "Poland",
+                "http://www.example.com/test.pls", List.of("jazz", "pop", "rock", "indie"), Instant.now()));
+
+        mockMvc.perform(get("/radio-stations/{id}", radioStationDB.id()))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(notNullValue()))
+                .andExpect(jsonPath("$.uuid").value(is("123e4567-e89b-12d3-a456-426655440000")))
+                .andExpect(jsonPath("$.name").value(is("Radio 1")))
+                .andExpect(jsonPath("$.country").value(is("Poland")))
+                .andExpect(jsonPath("$.url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$.tags").isArray())
+                .andExpect(jsonPath("$.tags").value(hasItems("jazz", "pop", "rock", "indie")))
+                .andExpect(jsonPath("$.timestamp").value(notNullValue()));
+    }
+
+    @Test
+    void getByIdWhenDoesNotExist() throws Exception {
         mockMvc.perform(get("/radio-stations/{id}", "not_existing_id"))
                 .andDo(print())
                 .andExpect(status().isNotFound());

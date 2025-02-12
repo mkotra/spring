@@ -19,13 +19,13 @@ public class DistributedPropertiesController {
         this.value = value;
     }
 
-    @GetMapping("/getConfigFromValue")
+    @GetMapping("/config-from-value")
     public String getConfigFromValue() {
         return value;
     }
 
-    @GetMapping("/getConfigFromProperty")
-    public String getConfigFromProperty() {
+    @GetMapping("/config-from-properties")
+    public String getConfigFromProperties() {
         return distributedProperties.getProperty();
     }
 }

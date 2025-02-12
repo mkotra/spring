@@ -38,6 +38,12 @@ public class RadioStationService {
                 .toList();
     }
 
+    public List<RadioStation> findByTags(List<String> tags) {
+        return radioStationRepository.findByTagsContainingAll(tags).stream()
+                .map(RadioStationMapper.INSTANCE::map)
+                .toList();
+    }
+
     public Optional<RadioStation> find(String id) {
         return radioStationRepository.findById(id)
                 .map(RadioStationMapper.INSTANCE::map);

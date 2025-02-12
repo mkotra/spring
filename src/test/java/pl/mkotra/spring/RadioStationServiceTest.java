@@ -83,6 +83,32 @@ public class RadioStationServiceTest {
     }
 
     @Test
+    @DisplayName("findByTags returns valid response")
+    public void findByTags() {
+        List<String> tags = List.of("sports", "music");
+
+        //given
+        when(radioStationRepository.findByTagsContainingAll(tags)).thenReturn(List.of(
+                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", "url1", List.of("jazz,rock"), Instant.now()),
+                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", "url2", List.of("news"), Instant.now()))
+        );
+
+        //when
+        List<RadioStation> result = radioStationService.findByTags(tags);
+
+        //then
+        assertThat(result)
+                .hasSize(2)
+                .allSatisfy(radioStation -> {
+                    assertThat(radioStation.id()).isNotNull();
+                    assertThat(radioStation.uuid()).isNotNull();
+                    assertThat(radioStation.name()).isNotNull();
+                    assertThat(radioStation.country()).isNotNull();
+                    assertThat(radioStation.timestamp()).isNotNull();
+                });
+    }
+
+    @Test
     @DisplayName("find returns valid response")
     public void find() {
         //given
