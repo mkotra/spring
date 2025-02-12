@@ -1,6 +1,7 @@
 package pl.mkotra.spring.controller;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -24,6 +25,11 @@ public class RadioStationControllerIT extends BaseIT {
 
     @Autowired
     RadioStationRepository radioStationRepository;
+
+    @BeforeEach
+    void setUp() {
+        radioStationRepository.deleteAll();
+    }
 
     @Test
     void pullStations() throws Exception {
