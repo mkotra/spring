@@ -31,12 +31,12 @@ public class RadioStationServiceTest {
         //given
         int limit = 100;
         when(radioBrowserAdapter.getRadioStations(limit)).thenReturn(List.of(
-                new RadioStation("id_1", "uuid_1", "Radio 1", "Poland", OffsetDateTime.now()),
-                new RadioStation("id_2", "uuid_2", "Radio 2", "Poland", OffsetDateTime.now()))
+                new RadioStation("id_1", "uuid_1", "Radio 1", "Poland", "url1", List.of("jazz,rock"), OffsetDateTime.now()),
+                new RadioStation("id_2", "uuid_2", "Radio 2", "Poland", "url2", List.of("news"), OffsetDateTime.now()))
         );
         when(radioStationRepository.saveAll(anyList())).thenReturn(List.of(
-                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", Instant.now()),
-                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", Instant.now()))
+                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", "url1", List.of("jazz,rock"), Instant.now()),
+                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", "url2", List.of("news"), Instant.now()))
         );
 
         //when
@@ -63,8 +63,8 @@ public class RadioStationServiceTest {
     public void findAll() {
         //given
         when(radioStationRepository.findAll()).thenReturn(List.of(
-                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", Instant.now()),
-                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", Instant.now()))
+                new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", "url1", List.of("jazz,rock"), Instant.now()),
+                new RadioStationDB("id_2", "uuid_2", "Radio 2", "Poland", "url2", List.of("news"), Instant.now()))
         );
 
         //when
@@ -87,7 +87,7 @@ public class RadioStationServiceTest {
     public void find() {
         //given
         String id = "id_1";
-        var radioStation = new RadioStationDB(id, "uuid_1", "Radio 1", "Poland", Instant.now());
+        var radioStation = new RadioStationDB("id_1", "uuid_1", "Radio 1", "Poland", "url1", List.of("jazz,rock"), Instant.now());
         when(radioStationRepository.findById(id)).thenReturn(Optional.of(radioStation));
 
         //when

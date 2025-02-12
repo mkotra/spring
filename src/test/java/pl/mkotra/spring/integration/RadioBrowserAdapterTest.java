@@ -19,8 +19,9 @@ class RadioBrowserAdapterTest {
     @SuppressWarnings("unchecked")
     private final Supplier<OffsetDateTime> timeSupplier = mock(Supplier.class);
     private final RetryRegistry retryRegistry = RetryRegistry.ofDefaults();
+    private final RadioStationFactory radioStationFactory = mock(RadioStationFactory.class);
 
-    private final RadioBrowserAdapter radioBrowserAdapter = new RadioBrowserAdapter(timeSupplier, restClient, retryRegistry);
+    private final RadioBrowserAdapter radioBrowserAdapter = new RadioBrowserAdapter(timeSupplier, restClient, retryRegistry, radioStationFactory);
 
     @Test
     void shouldReturnListOfRadioStations_whenApiReturnsData() {
@@ -32,6 +33,8 @@ class RadioBrowserAdapterTest {
                 new RadioBrowserStation("uuid1", "Radio 1", "USA", "http://www.example.com/test.pls", "jazz,pop,rock,indie"),
                 new RadioBrowserStation("uuid2", "Radio 2", "USA", "http://www.example.com/test.pls", "jazz,pop,rock,indie"),
         };
+        when(radioStationFactory.create(mockResponse[0], fixedTimestamp)).thenReturn(mock(RadioStation.class));
+        when(radioStationFactory.create(mockResponse[1], fixedTimestamp)).thenReturn(mock(RadioStation.class));
 
         mockRestClientResponse(mockResponse);
 
@@ -44,14 +47,11 @@ class RadioBrowserAdapterTest {
                 .hasSize(2)
                 .allSatisfy(station -> {
                     assertThat(station.id()).isNull();
-                    assertThat(station.uuid()).isNotEmpty();
-                    assertThat(station.name()).contains("Radio");
-                    assertThat(station.country()).isEqualTo("USA");
-                    assertThat(station.timestamp()).isEqualTo(fixedTimestamp);
                 });
 
         verify(timeSupplier).get();
         verify(restClient).get();
+        verify(radioStationFactory, times(2)).create(any(RadioBrowserStation.class), any(OffsetDateTime.class));
     }
 
     @SuppressWarnings("unchecked")

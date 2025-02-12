@@ -43,6 +43,9 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$[0].uuid").value(notNullValue()))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
+                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].tags").isArray())
+                .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
 
 
@@ -55,6 +58,9 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$[0].uuid").value(notNullValue()))
                 .andExpect(jsonPath("$[0].name").value(is("Radio 1")))
                 .andExpect(jsonPath("$[0].country").value(is("Poland")))
+                .andExpect(jsonPath("$[0].url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$[0].tags").isArray())
+                .andExpect(jsonPath("$[0].tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$[0].timestamp").value(notNullValue()));
 
         String radioStationId = radioStationRepository.findAll().getFirst().id();
@@ -66,6 +72,9 @@ public class RadioStationControllerIT extends BaseIT {
                 .andExpect(jsonPath("$.uuid").value(notNullValue()))
                 .andExpect(jsonPath("$.name").value(is("Radio 1")))
                 .andExpect(jsonPath("$.country").value(is("Poland")))
+                .andExpect(jsonPath("$.url").value(is("http://www.example.com/test.pls")))
+                .andExpect(jsonPath("$.tags").isArray())
+                .andExpect(jsonPath("$.tags").value(hasItems("jazz", "pop", "rock", "indie")))
                 .andExpect(jsonPath("$.timestamp").value(notNullValue()));
     }
 

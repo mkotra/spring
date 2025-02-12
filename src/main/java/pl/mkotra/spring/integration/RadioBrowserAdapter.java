@@ -19,13 +19,16 @@ public class RadioBrowserAdapter {
     private final Supplier<OffsetDateTime> timeSupplier;
     private final RestClient restClient;
     private final Retry retry;
+    private final RadioStationFactory radioStationFactory;
 
     RadioBrowserAdapter(Supplier<OffsetDateTime> timeSupplier,
                         RestClient restClient,
-                        RetryRegistry retryRegistry) {
+                        RetryRegistry retryRegistry,
+                        RadioStationFactory radioStationFactory) {
         this.restClient = restClient;
         this.timeSupplier = timeSupplier;
         this.retry = retryRegistry.retry("radioBrowserRetry");
+        this.radioStationFactory = radioStationFactory;
     }
 
     public List<RadioStation> getRadioStations(int limit) {
@@ -44,12 +47,8 @@ public class RadioBrowserAdapter {
             return Optional.ofNullable(radioBrowserStations)
                     .stream()
                     .flatMap(Arrays::stream)
-                    .map(s -> createRadioStation(s.name().trim(), s.country(), timestamp))
+                    .map(s -> radioStationFactory.create(s, timestamp))
                     .toList();
         }).unchecked().get();
-    }
-
-    private RadioStation createRadioStation(String name, String country, OffsetDateTime timestamp) {
-        return new RadioStation(null, UUID.randomUUID().toString(), name, country, timestamp);
     }
 }
