@@ -2,7 +2,7 @@ server:
   port: 0
 spring:
   application:
-    name: demo
+    name: @project.name@
     version: @project.version@
   main:
     banner-mode: "LOG"

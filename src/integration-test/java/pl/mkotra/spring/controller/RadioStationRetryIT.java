@@ -17,16 +17,6 @@ public class RadioStationRetryIT extends BaseIT {
 
     @Test
     void retriesRequest() throws Exception {
-        String stubResponseBody = """ 
-                        [
-                            {
-                                "stationuuid" : "123e4567-e89b-12d3-a456-426655440000",
-                                "name" : "Radio 1",
-                                "country" : "Poland"
-                            }
-                        ]
-                """;
-
         wireMockExtension.stubFor(WireMock.get("/json/stations?limit=10")
                 .inScenario("Retry Scenario")
                 .whenScenarioStateIs(Scenario.STARTED)
@@ -59,7 +49,7 @@ public class RadioStationRetryIT extends BaseIT {
                 .willReturn(aResponse()
                         .withStatus(200)
                         .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                        .withBody(stubResponseBody)
+                        .withBody(ResponseStubs.STUB_RESPONSE_BODY)
                 )
         );
 

@@ -29,8 +29,8 @@ class RadioBrowserAdapterTest {
         when(timeSupplier.get()).thenReturn(fixedTimestamp);
 
         RadioBrowserStation[] mockResponse = {
-                new RadioBrowserStation("uuid1", "Radio 1", "USA"),
-                new RadioBrowserStation("uuid2", "Radio 2", "USA"),
+                new RadioBrowserStation("uuid1", "Radio 1", "USA", "http://www.example.com/test.pls", "jazz,pop,rock,indie"),
+                new RadioBrowserStation("uuid2", "Radio 2", "USA", "http://www.example.com/test.pls", "jazz,pop,rock,indie"),
         };
 
         mockRestClientResponse(mockResponse);

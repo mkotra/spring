@@ -28,19 +28,10 @@ public class RadioStationControllerIT extends BaseIT {
 
     @Test
     void pullAndGetRadioStations() throws Exception {
-        String stubResponseBody = """ 
-                        [
-                            {
-                                "stationuuid" : "123e4567-e89b-12d3-a456-426655440000",
-                                "name" : "Radio 1",
-                                "country" : "Poland"
-                            }
-                        ]
-                """;
 
         wireMockExtension.stubFor(WireMock.get("/json/stations?limit=10").willReturn(aResponse()
                 .withHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
-                .withBody(stubResponseBody)
+                .withBody(ResponseStubs.STUB_RESPONSE_BODY)
         ));
 
         mockMvc.perform(post("/radio-stations/pull").param("limit", "10"))
