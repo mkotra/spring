@@ -15,7 +15,7 @@ public class RadioStationService {
     private final RadioStationRepository radioStationRepository;
     private final RadioBrowserAdapter radioBrowserAdapter;
 
-    public RadioStationService(RadioStationRepository radioStationRepository,
+    RadioStationService(RadioStationRepository radioStationRepository,
                                RadioBrowserAdapter radioBrowserAdapter) {
         this.radioStationRepository = radioStationRepository;
         this.radioBrowserAdapter = radioBrowserAdapter;

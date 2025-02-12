@@ -13,8 +13,8 @@ public class DistributedPropertiesController {
     private final DistributedProperties distributedProperties;
     private final String value;
 
-    public DistributedPropertiesController(DistributedProperties distributedProperties,
-                                           @Value("${distributed.property}") String value) {
+    DistributedPropertiesController(DistributedProperties distributedProperties,
+                                    @Value("${distributed.property}") String value) {
         this.distributedProperties = distributedProperties;
         this.value = value;
     }

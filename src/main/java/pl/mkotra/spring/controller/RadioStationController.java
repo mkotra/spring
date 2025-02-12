@@ -24,7 +24,7 @@ public class RadioStationController {
     private final MeterRegistry meterRegistry;
     private final Timer timer;
 
-    public RadioStationController(RadioStationService radioStationService, MeterRegistry meterRegistry) {
+    RadioStationController(RadioStationService radioStationService, MeterRegistry meterRegistry) {
         this.radioStationService = radioStationService;
         this.meterRegistry = meterRegistry;
         this.timer = Timer.builder("pull_radio_stations_time")

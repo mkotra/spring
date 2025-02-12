@@ -1,8 +1,7 @@
-package pl.mkotra.spring;
+package pl.mkotra.spring.core;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pl.mkotra.spring.core.RadioStationService;
 import pl.mkotra.spring.integration.RadioBrowserAdapter;
 import pl.mkotra.spring.core.model.RadioStation;
 import pl.mkotra.spring.storage.RadioStationDB;
@@ -18,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.within;
 import static org.mockito.Mockito.*;
 
-public class RadioStationServiceTest {
+class RadioStationServiceTest {
 
     RadioStationRepository radioStationRepository = mock(RadioStationRepository.class);
     RadioBrowserAdapter radioBrowserAdapter = mock(RadioBrowserAdapter.class);
