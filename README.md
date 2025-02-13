@@ -10,6 +10,7 @@ The retrieved radio stations are stored in MongoDB and can be accessed later. Th
 - **Fabio load balancer** provides access on port 9999.
 - **Live configuration reload** is supported via **Consul** and `@RefreshScope`.
 - Well-structured **unit and integration tests**, executed in appropriate Maven build phases.
+- Virtual threads used to better utilize server resources.
 
 ## Prerequisites
 To run the application, you will need:
