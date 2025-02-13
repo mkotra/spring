@@ -14,8 +14,10 @@ scrape_configs:
         target_label: __address__
         replacement: '${1}${2}'  # Ensures format is IP:PORT
 
-      # Optionally set an instance label for clarity
-      - target_label: instance
-        replacement: 'demo-app'
+      # Set instance label to differentiate between instances based on service address and port
+      - source_labels: [__meta_consul_service_address, __meta_consul_service_port]
+        separator: ':'
+        target_label: instance
+        replacement: 'demo-${1}${2}'  # Instance label becomes IP:PORT of the service
 
 
