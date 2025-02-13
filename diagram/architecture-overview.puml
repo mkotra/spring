@@ -1,0 +1,40 @@
+@startuml
+
+skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+skinparam componentStyle rectangle
+
+' Define system components
+frame "Load Balancing & Service Discovery" {
+    node "Fabio (Load Balancer)" as fabio #lightblue
+    node "Consul (Service Discovery)" as consul #lightgreen
+}
+
+frame "Monitoring" {
+    node "Prometheus (Monitoring)" as prometheus #orange
+}
+
+frame "Database" {
+    node "MongoDB" as mongodb #lightgray
+}
+
+frame "External API" {
+    node "Radio-Browser API" as radio_browser #pink
+}
+
+frame "Application Layer" {
+    node "Demo App Instances" as demo_app #lightyellow
+}
+
+' Connections
+fabio --> demo_app : Routes Requests
+
+demo_app <--> mongodb : Stores and Fetches Data
+
+demo_app --> radio_browser : Fetches Data
+
+demo_app --> consul : Registers Service
+
+prometheus --> demo_app : Scrapes Metrics
+
+@enduml

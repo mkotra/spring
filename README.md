@@ -21,6 +21,9 @@ To run the application, you will need:
 - **Fabio** (load balancer)
 - **Prometheus**
 
+## Architecture overview
+![System Architecture](diagram/architecture-overview.png)
+
 ## Running the Application
 ### Setting Up Infrastructure
 Use Docker and `docker-compose.yml` to set up the necessary infrastructure:
