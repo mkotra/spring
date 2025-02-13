@@ -1,5 +1,7 @@
 server:
   port: 0
+  servlet:
+    context-path: /demo
 spring:
   application:
     name: @project.name@
@@ -19,10 +21,11 @@ spring:
       port: 8500
       discovery:
         enabled: true
-        instance-group: demo
+        instance-group: ${spring.application.name}
         instance-id: ${spring.application.name}:${spring.application.version}:${random.int}
-        healthCheckPath: /actuator/health
+        healthCheckPath: /${spring.application.name}/actuator/health
         healthCheckInterval: 5s
+        tags: urlprefix-/${spring.application.name}
       config:
         enabled: true
     loadbalancer:

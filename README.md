@@ -14,8 +14,9 @@ To run everything You need:
 - Java 23
 - MongoDB (8.0.0)
 - Consul running on default ports
+- Fabio - load balancer
 - Prometheus
-- Docker (optional - it is required for unit tests and can also set up MongoDB, Consul and Prometheus)
+- Docker (optional - it is required for unit tests and can also set up MongoDB, Consul, Fabio and Prometheus)
 
 Docker and `docker-compose.yml` file can be used to set up infrastructure.
 
@@ -35,32 +36,38 @@ run app:
 mvn spring-boot:run
 ``
 
-check Consul to make sure everything is up and running and determine APPLICATION_PORT
+Swagger-UI can be used to test REST API:
+
+``
+http://localhost:9999/demo/swagger-ui/index.html
+``
+
+In case of errors check Consul to make sure everything is up and running
 
 ``
 http://localhost:8500/
 ``
 
-Swagger-UI can be used to test REST API: 
+Please also check Fabio to make sure demo service is properly registered and can be accessed on 9999 port 
 
 ``
-http://localhost:${APPLICATION_PORT}/swagger-ui/index.html
+http://localhost:9998/
 ``
 
 Metrics can be checked at:
 
 ``
-http://localhost:${APPLICATION_PORT}/actuator/metrics
+http://localhost:9999/demo/actuator/metrics
 ``
 
 ``
-http://localhost:${APPLICATION_PORT}/actuator/prometheus
+http://localhost:9999/demo/actuator/prometheus
 ``
 
 Prometheus dashboard is available here: 
 
 ``
-http://localhost:9090  
+http://localhost:9090 
 ``
 
 Some example metrics can be used to test: 

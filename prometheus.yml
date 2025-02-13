@@ -6,7 +6,7 @@ scrape_configs:
     consul_sd_configs:
       - server: 'consul:8500'  # Consul server address
         services: ['demo']  # Service name registered in Consul
-    metrics_path: '/actuator/prometheus'  # Correct metrics path
+    metrics_path: '/demo/actuator/prometheus'  # Correct metrics path
     relabel_configs:
       # Combine service address and port correctly
       - source_labels: [__meta_consul_service_address, __meta_consul_service_port]

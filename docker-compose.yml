@@ -8,16 +8,30 @@ services:
       - my-network
 
   consul:
-    image: consul:1.15.4
+    image: hashicorp/consul:latest
     container_name: consul-container
     ports:
       - "8500:8500"
     networks:
       - my-network
 
+  fabio:
+    image: fabiolb/fabio:latest
+    container_name: fabio-container
+    ports:
+      - "9999:9999"
+      - "9998:9998"  # Fabio Admin UI
+    volumes:
+      - ./fabio.properties:/etc/fabio/fabio.properties
+    command: [ "-cfg", "/etc/fabio/fabio.properties" ]
+    depends_on:
+      - consul
+    networks:
+      - my-network
+
   prometheus:
     image: prom/prometheus:latest
-    container_name: prometheus
+    container_name: prometheus-container
     ports:
       - "9090:9090"  # Prometheus UI
     volumes:
