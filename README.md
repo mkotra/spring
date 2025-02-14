@@ -37,6 +37,12 @@ Run the following script to seed values into Consul:
 ./seed-consul.sh
 ```
 
+### Building the Application
+This will build the application and also run both unit and integration tests:
+```sh
+mvn verify
+```
+
 ### Starting the Application
 Start the Spring Boot application using Maven:
 ```sh
