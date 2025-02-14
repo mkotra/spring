@@ -7,10 +7,11 @@ The retrieved radio stations are stored in MongoDB and can be accessed later. Th
 ## Features
 - The application starts on a **random port** and registers itself with **Consul service discovery**.
 - Application Exposes **Spring Boot Actuator** for health checks and metrics (including **Prometheus** format).
-- **Fabio load balancer** provides access on port 9999.
+- **Fabio load balancer** provides access on 9999 port.
 - **Live configuration reload** is supported via **Consul** and `@RefreshScope`.
 - Well-structured **unit and integration tests**, executed in appropriate Maven build phases.
-- Virtual threads used to better utilize server resources.
+- **Virtual threads** used to better utilize server resources.
+- **Retry and rate limiter** for external API integration. 
 
 ## Prerequisites
 To run the application, you will need:
