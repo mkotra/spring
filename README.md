@@ -45,22 +45,38 @@ mvn spring-boot:run
 
 ### API Documentation
 REST API can be tested using Swagger UI:
-`http://localhost:9999/demo/swagger-ui/index.html`
+```text
+http://localhost:9999/demo/swagger-ui/index.html
+```
 
 ## Debugging & Monitoring
 ### Consul Dashboard
-Check Consul to ensure all services are running properly: `http://localhost:8500/`
+Check Consul to ensure all services are running properly: 
+```text
+http://localhost:8500/
+```
 
 ### Fabio Load Balancer
 Verify that the demo service is registered correctly in Fabio and accessible on port 9999:
-`http://localhost:9998/`
+```text
+http://localhost:9998/
+```
 
 ### Metrics & Monitoring
 Actuator metrics can be accessed here:
-`http://localhost:9999/demo/actuator/metrics`
-and here: `http://localhost:9999/demo/actuator/prometheus`
+```text
+http://localhost:9999/demo/actuator/metrics
+```
 
-Prometheus dashboard is available here: `http://localhost:9090`
+Actuator metrics for Prometheus can be accessed here:
+```text
+http://localhost:9999/demo/actuator/prometheus
+```
+
+Prometheus dashboard is available here:
+```text
+http://localhost:9090
+```
 
 ### Example Prometheus Queries
 Use these queries to monitor application performance:
