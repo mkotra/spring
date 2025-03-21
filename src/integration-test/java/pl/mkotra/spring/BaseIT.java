@@ -23,7 +23,7 @@ import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.wireMoc
 @AutoConfigureMockMvc
 public abstract class BaseIT {
 
-    static final int RADIO_BROWSER_TEST_API_PORT = 9999;
+    static final int RADIO_BROWSER_TEST_API_PORT = 7777;
 
     @Container
     static final MongoDBContainer MONGO = new MongoDBContainer(DockerImageName.parse("mongo:8.0.0"));
